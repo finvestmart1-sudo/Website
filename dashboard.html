@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard – Finvestmart</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { background: var(--light-bg); }
+    .reward-claim-card { background:#fff; border-radius:var(--radius-xl); border:1px solid var(--border-color); overflow:hidden; margin-bottom:24px; }
+    .reward-claim-card-header { background:linear-gradient(135deg,var(--primary-color),#1a4a8a); padding:20px 24px; display:flex; align-items:center; justify-content:space-between; }
+    .reward-claim-card-header h3 { color:#fff; font-size:1rem; }
+    .reward-claim-table { width:100%; }
+    .reward-claim-table th { padding:12px 16px; background:var(--light-bg); font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--secondary-text); border-bottom:1px solid var(--border-color); text-align:left; }
+    .reward-claim-table td { padding:14px 16px; font-size:0.875rem; border-bottom:1px solid var(--border-color); }
+    .reward-claim-table tr:last-child td { border-bottom:none; }
+    .reward-claim-table tr:hover td { background:var(--light-bg); }
+  </style>
+</head>
+<body class="dashboard-page">
+
+  <!-- ======================================================
+       SIDEBAR
+  ====================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="nav-logo-icon">F</div>
+      Finvest<span style="color:var(--accent-color);">mart</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-title">Main</div>
+      <a href="dashboard.html" class="sidebar-link active"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="#applications" class="sidebar-link" onclick="showSection('applications')"><i class="fas fa-file-alt"></i> My Applications <span class="sidebar-badge">3</span></a>
+      <a href="#rewards" class="sidebar-link" onclick="showSection('rewards')"><i class="fas fa-coins"></i> My Rewards</a>
+      <a href="#claim" class="sidebar-link" onclick="showSection('claim')"><i class="fas fa-hand-holding-dollar"></i> Claim Reward</a>
+      <a href="#payouts" class="sidebar-link" onclick="showSection('payouts')"><i class="fas fa-history"></i> Payout History</a>
+
+      <div class="sidebar-section-title" style="margin-top:24px;">Products</div>
+      <a href="products/insurance.html" class="sidebar-link"><i class="fas fa-shield-halved"></i> Insurance</a>
+      <a href="products/personal-loan.html" class="sidebar-link"><i class="fas fa-hand-holding-dollar"></i> Personal Loan</a>
+      <a href="products/demat.html" class="sidebar-link"><i class="fas fa-chart-line"></i> Demat Account</a>
+      <a href="index.html#products" class="sidebar-link"><i class="fas fa-grid-2"></i> All Products</a>
+
+      <div class="sidebar-section-title" style="margin-top:24px;">Account</div>
+      <a href="#profile" class="sidebar-link" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a>
+      <a href="#bank" class="sidebar-link" onclick="showSection('bank')"><i class="fas fa-university"></i> Bank Details</a>
+      <a href="#notifications" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a>
+      <a href="api/auth/logout.php" class="sidebar-link" style="color:#EF4444;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">RS</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Rahul Sharma</div>
+        <div class="sidebar-user-email">rahul@example.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================
+       MAIN CONTENT
+  ====================================================== -->
+  <main class="dashboard-main">
+
+    <!-- Top Bar -->
+    <div class="dashboard-topbar">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button class="sidebar-toggle btn btn-outline btn-sm" style="display:none;" id="sidebarToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="dashboard-greeting">
+          <h1>Good morning, Rahul! 👋</h1>
+          <p>Here's a summary of your financial activity</p>
+        </div>
+      </div>
+      <div class="dashboard-actions">
+        <a href="index.html#products" class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> New Application</a>
+        <a href="register.html" class="btn btn-accent btn-sm"><i class="fas fa-coins"></i> Claim Rewards</a>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid" id="section-overview">
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Total Rewards</span>
+          <div class="stat-card-icon" style="background:rgba(0,200,150,0.1);color:var(--accent-color);"><i class="fas fa-coins"></i></div>
+        </div>
+        <div class="stat-card-value" data-target="8750" data-prefix="₹">₹0</div>
+        <div class="stat-card-change positive"><i class="fas fa-arrow-up"></i> +₹1,500 this month</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Applications</span>
+          <div class="stat-card-icon" style="background:rgba(99,102,241,0.1);color:#6366F1;"><i class="fas fa-file-alt"></i></div>
+        </div>
+        <div class="stat-card-value" data-target="5">0</div>
+        <div class="stat-card-change positive"><i class="fas fa-arrow-up"></i> 2 approved</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Pending Rewards</span>
+          <div class="stat-card-icon" style="background:rgba(245,158,11,0.1);color:#F59E0B;"><i class="fas fa-clock"></i></div>
+        </div>
+        <div class="stat-card-value" data-target="2200" data-prefix="₹">₹0</div>
+        <div class="stat-card-change" style="color:var(--secondary-text);">3 eligible products</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-label">Paid Out</span>
+          <div class="stat-card-icon" style="background:rgba(10,37,64,0.08);color:var(--primary-color);"><i class="fas fa-check-circle"></i></div>
+        </div>
+        <div class="stat-card-value" data-target="6550" data-prefix="₹">₹0</div>
+        <div class="stat-card-change positive"><i class="fas fa-arrow-up"></i> 4 payouts done</div>
+      </div>
+    </div>
+
+    <!-- Applications & Rewards Row -->
+    <div class="dashboard-grid">
+
+      <!-- Recent Applications -->
+      <div class="dashboard-card" id="section-applications">
+        <div class="card-header">
+          <h3>My Applications</h3>
+          <a href="index.html#products">+ New Application</a>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div style="padding:0 24px;">
+            <div class="application-row">
+              <div class="app-icon blue"><i class="fas fa-shield-halved"></i></div>
+              <div class="app-info">
+                <div class="app-name">Term Insurance – HDFC Life</div>
+                <div class="app-date">Applied: 12 Jan 2024 • Sum Assured: ₹1 Cr</div>
+              </div>
+              <span class="status-badge approved">Approved</span>
+            </div>
+
+            <div class="application-row">
+              <div class="app-icon green"><i class="fas fa-hand-holding-dollar"></i></div>
+              <div class="app-info">
+                <div class="app-name">Personal Loan – ICICI Bank</div>
+                <div class="app-date">Applied: 18 Jan 2024 • Amount: ₹3,00,000</div>
+              </div>
+              <span class="status-badge processing">Processing</span>
+            </div>
+
+            <div class="application-row">
+              <div class="app-icon teal"><i class="fas fa-chart-line"></i></div>
+              <div class="app-info">
+                <div class="app-name">Demat Account – Zerodha</div>
+                <div class="app-date">Applied: 20 Jan 2024</div>
+              </div>
+              <span class="status-badge approved">Approved</span>
+            </div>
+
+            <div class="application-row">
+              <div class="app-icon purple"><i class="fas fa-house"></i></div>
+              <div class="app-info">
+                <div class="app-name">Home Loan – SBI</div>
+                <div class="app-date">Applied: 22 Jan 2024 • Amount: ₹35,00,000</div>
+              </div>
+              <span class="status-badge pending">Pending</span>
+            </div>
+
+            <div class="application-row">
+              <div class="app-icon red"><i class="fas fa-credit-card"></i></div>
+              <div class="app-info">
+                <div class="app-name">Credit Card – Axis Bank</div>
+                <div class="app-date">Applied: 25 Jan 2024</div>
+              </div>
+              <span class="status-badge pending">Pending</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rewards Panel -->
+      <div>
+        <div class="dashboard-card" id="section-rewards">
+          <div class="card-header">
+            <h3>My Rewards</h3>
+            <a href="#claim" onclick="showSection('claim')">Claim All</a>
+          </div>
+          <div class="card-body">
+            <div class="reward-dashboard-card">
+
+              <div class="reward-dash-item">
+                <div class="reward-dash-icon"><i class="fas fa-shield-halved"></i></div>
+                <div class="reward-dash-info">
+                  <div class="reward-dash-name">Term Insurance</div>
+                  <div class="reward-dash-status"><span class="status-badge paid">Paid</span></div>
+                </div>
+                <div class="reward-dash-amount">₹1,500</div>
+              </div>
+
+              <div class="reward-dash-item">
+                <div class="reward-dash-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="reward-dash-info">
+                  <div class="reward-dash-name">Demat Account</div>
+                  <div class="reward-dash-status"><span class="status-badge approved">Eligible</span></div>
+                </div>
+                <div class="reward-dash-amount">₹700</div>
+              </div>
+
+              <div class="reward-dash-item">
+                <div class="reward-dash-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+                <div class="reward-dash-info">
+                  <div class="reward-dash-name">Personal Loan</div>
+                  <div class="reward-dash-status"><span class="status-badge pending">Pending</span></div>
+                </div>
+                <div class="reward-dash-amount">₹3,000</div>
+              </div>
+
+              <div class="reward-dash-item">
+                <div class="reward-dash-icon"><i class="fas fa-house"></i></div>
+                <div class="reward-dash-info">
+                  <div class="reward-dash-name">Home Loan</div>
+                  <div class="reward-dash-status"><span class="status-badge pending">Pending</span></div>
+                </div>
+                <div class="reward-dash-amount">₹5,000</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="dashboard-card" style="margin-top:20px;">
+          <div class="card-header"><h3>Reward Progress</h3></div>
+          <div class="card-body">
+            <div style="margin-bottom:16px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:0.8rem;font-weight:600;color:var(--primary-color);">Overall Goal</span>
+                <span style="font-size:0.8rem;color:var(--accent-color);font-weight:700;">₹8,750 / ₹10,000</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:87.5%;"></div></div>
+            </div>
+            <div style="margin-bottom:16px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:0.8rem;color:var(--secondary-text);">Applications Approved</span>
+                <span style="font-size:0.8rem;color:var(--secondary-text);">2 / 5</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:40%;background:linear-gradient(90deg,#6366F1,#8B5CF6);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:0.8rem;color:var(--secondary-text);">Rewards Paid</span>
+                <span style="font-size:0.8rem;color:var(--secondary-text);">1 / 3</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:33%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================
+         CLAIM REWARD SECTION
+    ====================================================== -->
+    <div id="section-claim" class="reward-claim-card">
+      <div class="reward-claim-card-header">
+        <h3><i class="fas fa-coins" style="margin-right:8px;color:var(--accent-color);"></i> Claim Your Rewards</h3>
+        <span style="color:rgba(255,255,255,0.7);font-size:0.825rem;">Total Claimable: <strong style="color:var(--accent-color);">₹700</strong></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="reward-claim-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Partner</th>
+              <th>Applied Date</th>
+              <th>Reward Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Term Insurance</strong></td>
+              <td>HDFC Life</td>
+              <td>12 Jan 2024</td>
+              <td style="color:var(--accent-color);font-weight:700;">₹1,500</td>
+              <td><span class="status-badge paid">Paid</span></td>
+              <td><span style="color:var(--secondary-text);font-size:0.8rem;">Paid on 15 Jan</span></td>
+            </tr>
+            <tr>
+              <td><strong>Demat Account</strong></td>
+              <td>Zerodha</td>
+              <td>20 Jan 2024</td>
+              <td style="color:var(--accent-color);font-weight:700;">₹700</td>
+              <td><span class="status-badge approved">Eligible</span></td>
+              <td>
+                <button class="btn btn-accent btn-sm claim-reward-btn" data-reward-id="2">
+                  <i class="fas fa-coins"></i> Claim ₹700
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Personal Loan</strong></td>
+              <td>ICICI Bank</td>
+              <td>18 Jan 2024</td>
+              <td style="color:var(--accent-color);font-weight:700;">₹3,000</td>
+              <td><span class="status-badge pending">Pending</span></td>
+              <td><span style="color:var(--secondary-text);font-size:0.8rem;">After approval</span></td>
+            </tr>
+            <tr>
+              <td><strong>Home Loan</strong></td>
+              <td>SBI</td>
+              <td>22 Jan 2024</td>
+              <td style="color:var(--accent-color);font-weight:700;">₹5,000</td>
+              <td><span class="status-badge pending">Pending</span></td>
+              <td><span style="color:var(--secondary-text);font-size:0.8rem;">After approval</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ======================================================
+         PAYOUT HISTORY
+    ====================================================== -->
+    <div class="dashboard-card" id="section-payouts">
+      <div class="card-header">
+        <h3><i class="fas fa-history" style="margin-right:8px;"></i> Payout History</h3>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="reward-claim-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Transaction ID</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15 Jan 2024</td>
+              <td>Term Insurance – HDFC Life</td>
+              <td style="color:var(--accent-color);font-weight:700;">₹1,500</td>
+              <td><i class="fas fa-university" style="margin-right:4px;"></i> Bank Transfer</td>
+              <td style="font-family:monospace;font-size:0.8rem;">TXN2024011501</td>
+              <td><span class="status-badge paid">Paid</span></td>
+            </tr>
+            <tr>
+              <td>05 Dec 2023</td>
+              <td>Demat Account – Angel One</td>
+              <td style="color:var(--accent-color);font-weight:700;">₹500</td>
+              <td><i class="fas fa-mobile-alt" style="margin-right:4px;"></i> UPI</td>
+              <td style="font-family:monospace;font-size:0.8rem;">TXN2023120501</td>
+              <td><span class="status-badge paid">Paid</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ======================================================
+         PROFILE SECTION
+    ====================================================== -->
+    <div class="dashboard-card" id="section-profile" style="display:none;">
+      <div class="card-header"><h3>My Profile</h3></div>
+      <div class="card-body">
+        <form style="max-width:600px;">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" value="Rahul" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" value="Sharma" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" value="rahul@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile</label>
+            <input type="tel" class="form-input" value="9876543210" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">PAN Number</label>
+            <input type="text" class="form-input" placeholder="ABCDE1234F" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" class="form-input" value="Bangalore" />
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bank Details Section -->
+    <div class="dashboard-card" id="section-bank" style="display:none;">
+      <div class="card-header"><h3>Bank & UPI Details</h3></div>
+      <div class="card-body">
+        <form style="max-width:600px;">
+          <div class="form-group">
+            <label class="form-label">Account Holder Name</label>
+            <input type="text" class="form-input" placeholder="As per bank records" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bank Name</label>
+            <select class="form-input form-select">
+              <option>Select Bank</option>
+              <option>HDFC Bank</option><option>ICICI Bank</option><option>SBI</option>
+              <option>Axis Bank</option><option>Kotak Mahindra</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Account Number</label>
+            <input type="text" class="form-input" placeholder="Account number" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">IFSC Code</label>
+            <input type="text" class="form-input" placeholder="e.g. HDFC0001234" />
+          </div>
+          <div class="form-divider"><span>or add UPI</span></div>
+          <div class="form-group">
+            <label class="form-label">UPI ID</label>
+            <input type="text" class="form-input" placeholder="yourname@upi" />
+          </div>
+          <button type="submit" class="btn btn-primary">Save Bank Details</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Show/hide sections
+    function showSection(name) {
+      const sections = ['overview', 'applications', 'rewards', 'claim', 'payouts', 'profile', 'bank'];
+      sections.forEach(s => {
+        const el = document.getElementById('section-' + s);
+        if (el) el.style.display = s === name ? '' : (s === 'overview' ? (name === 'overview' ? '' : 'none') : 'none');
+      });
+      // Update active sidebar
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      const activeLink = document.querySelector(`.sidebar-link[onclick*="${name}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+
+    // Mobile sidebar toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (sidebarToggle) {
+      sidebarToggle.style.display = 'flex';
+      sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+    }
+
+    // Responsive
+    function checkMobile() {
+      const toggle = document.getElementById('sidebarToggle');
+      if (window.innerWidth <= 768) {
+        if (toggle) toggle.style.display = 'flex';
+      } else {
+        if (toggle) toggle.style.display = 'none';
+        if (sidebar) sidebar.classList.remove('open');
+      }
+    }
+    window.addEventListener('resize', checkMobile);
+    checkMobile();
+  </script>
+</body>
+</html>

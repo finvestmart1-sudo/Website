@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finvestmart – Smart Financial Decisions. Real Cashback Rewards.</title>
+  <meta name="description" content="Apply for loans, insurance, and investments — and earn instant cashback rewards. India's trusted fintech reward platform." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* Extra homepage-specific styles */
+    .hero-stat-divider { width: 1px; height: 40px; background: var(--border-color); }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================
+       NAVBAR
+  ====================================================== -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-icon">F</div>
+          Finvest<span>mart</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li class="nav-dropdown">
+            <a href="#">Products <i class="fas fa-chevron-down" style="font-size:0.65rem;margin-left:4px;"></i></a>
+            <div class="nav-dropdown-menu">
+              <a href="products/insurance.html"><i class="fas fa-shield-halved"></i> Insurance</a>
+              <a href="products/personal-loan.html"><i class="fas fa-hand-holding-dollar"></i> Personal Loan</a>
+              <a href="products/home-loan.html"><i class="fas fa-house"></i> Home Loan</a>
+              <a href="products/business-loan.html"><i class="fas fa-briefcase"></i> Business Loan</a>
+              <a href="products/demat.html"><i class="fas fa-chart-line"></i> Demat Account</a>
+              <a href="products/investments.html"><i class="fas fa-seedling"></i> Investments</a>
+              <a href="products/credit-card.html"><i class="fas fa-credit-card"></i> Credit Card</a>
+            </div>
+          </li>
+          <li><a href="#rewards">Rewards</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="login.html" class="btn-login">Login</a>
+          <a href="register.html" class="btn btn-accent">Get Started</a>
+        </div>
+
+        <button class="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="products/insurance.html">Insurance</a>
+      <a href="products/personal-loan.html">Personal Loan</a>
+      <a href="products/home-loan.html">Home Loan</a>
+      <a href="products/business-loan.html">Business Loan</a>
+      <a href="products/demat.html">Demat Account</a>
+      <a href="products/investments.html">Investments</a>
+      <a href="products/credit-card.html">Credit Card</a>
+      <a href="#rewards">Rewards</a>
+      <a href="#how-it-works">How It Works</a>
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <a href="login.html" class="btn btn-outline btn-full">Login</a>
+        <a href="register.html" class="btn btn-accent btn-full">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======================================================
+       HERO SECTION
+  ====================================================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Hero Content -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-star"></i>
+            India's #1 Fintech Rewards Platform
+          </div>
+
+          <h1 class="hero-title">
+            Smart Financial Decisions.<br>
+            <span class="highlight">Real Cashback</span> Rewards.
+          </h1>
+
+          <p class="hero-subtitle">
+            Apply for loans, insurance, and investments through Finvestmart — and earn instant cashback rewards on every approved application.
+          </p>
+
+          <div class="hero-cta">
+            <a href="register.html" class="btn btn-primary btn-lg">
+              <i class="fas fa-rocket"></i> Apply Now
+            </a>
+            <a href="#products" class="btn btn-outline btn-lg">
+              <i class="fas fa-grid-2"></i> Explore Products
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-value" data-target="10000" data-suffix="+">0</span>
+              <span class="hero-stat-label">Happy Users</span>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+              <span class="hero-stat-value" data-prefix="₹" data-target="2.5" data-suffix="Cr+">₹0</span>
+              <span class="hero-stat-label">Rewards Paid</span>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+              <span class="hero-stat-value" data-target="50" data-suffix="+">0</span>
+              <span class="hero-stat-label">Partners</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual (dashboard preview) -->
+        <div class="hero-visual">
+          <!-- Float card 1 -->
+          <div class="hero-float-card card-1">
+            <div class="float-card-icon green"><i class="fas fa-check"></i></div>
+            <div class="float-card-text">
+              <span class="float-card-value">Approved!</span>
+              <span class="float-card-label">Personal Loan ₹5L</span>
+            </div>
+          </div>
+
+          <!-- Dashboard mockup -->
+          <div class="hero-dashboard">
+            <div class="dashboard-header">
+              <div class="dashboard-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="dashboard-title">My Finvestmart Dashboard</span>
+            </div>
+
+            <div class="dashboard-balance">
+              <div class="balance-label">Total Rewards Earned</div>
+              <div class="balance-value">₹8,750</div>
+              <div class="balance-change">↑ +₹1,500 this month</div>
+            </div>
+
+            <div class="dashboard-rewards-mini">
+              <div class="reward-mini-card">
+                <div class="reward-mini-label">Pending</div>
+                <div class="reward-mini-value">₹2,200</div>
+                <div class="reward-mini-badge">3 products</div>
+              </div>
+              <div class="reward-mini-card">
+                <div class="reward-mini-label">Paid Out</div>
+                <div class="reward-mini-value">₹6,550</div>
+                <div class="reward-mini-badge">Paid</div>
+              </div>
+            </div>
+
+            <div class="dashboard-activity">
+              <div class="activity-item">
+                <div class="activity-icon green"><i class="fas fa-shield-halved"></i></div>
+                <div class="activity-info">
+                  <div class="activity-name">Term Insurance</div>
+                  <div class="activity-status">Approved • HDFC Life</div>
+                </div>
+                <div class="activity-amount">+₹1,500</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon blue"><i class="fas fa-chart-line"></i></div>
+                <div class="activity-info">
+                  <div class="activity-name">Demat Account</div>
+                  <div class="activity-status">Eligible • Zerodha</div>
+                </div>
+                <div class="activity-amount">+₹700</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon orange"><i class="fas fa-hand-holding-dollar"></i></div>
+                <div class="activity-info">
+                  <div class="activity-name">Personal Loan</div>
+                  <div class="activity-status">Under review</div>
+                </div>
+                <div class="activity-amount">+₹3,000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Float card 2 -->
+          <div class="hero-float-card card-2">
+            <div class="float-card-icon green"><i class="fas fa-coins"></i></div>
+            <div class="float-card-text">
+              <span class="float-card-value">₹3,000 Earned!</span>
+              <span class="float-card-label">Cashback Reward</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       TRUST SECTION
+  ====================================================== -->
+  <section class="trust-section">
+    <div class="container">
+      <p class="trust-text">Trusted partners across banking, NBFC &amp; insurance</p>
+      <div class="trust-logos">
+        <div class="trust-logo"><i class="fas fa-university"></i> HDFC Bank</div>
+        <div class="trust-logo"><i class="fas fa-university"></i> ICICI Bank</div>
+        <div class="trust-logo"><i class="fas fa-shield-halved"></i> LIC India</div>
+        <div class="trust-logo"><i class="fas fa-chart-line"></i> Zerodha</div>
+        <div class="trust-logo"><i class="fas fa-building"></i> Bajaj Finserv</div>
+        <div class="trust-logo"><i class="fas fa-university"></i> SBI</div>
+        <div class="trust-logo"><i class="fas fa-shield-halved"></i> Max Life</div>
+        <div class="trust-logo"><i class="fas fa-piggy-bank"></i> Groww</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PRODUCTS SECTION
+  ====================================================== -->
+  <section class="section-padding" id="products">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">Our Products</span>
+        <h2 class="section-title">Financial Products With <span style="color:var(--accent-color)">Instant Rewards</span></h2>
+        <p class="section-subtitle">Choose from 50+ financial products and earn cashback rewards on every approved application</p>
+      </div>
+
+      <div class="products-grid">
+
+        <a href="products/insurance.html" class="product-card">
+          <div class="product-icon blue"><i class="fas fa-shield-halved"></i></div>
+          <h3 class="product-title">Life & Health Insurance</h3>
+          <p class="product-desc">Term plans, health insurance, ULIP from 20+ top insurers. Protect your family while earning rewards.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹1,500 cashback</div>
+          <div class="product-link">Explore Plans <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="products/personal-loan.html" class="product-card">
+          <div class="product-icon green"><i class="fas fa-hand-holding-dollar"></i></div>
+          <h3 class="product-title">Personal Loan</h3>
+          <p class="product-desc">Instant personal loans from ₹50,000 to ₹50 lakhs. Quick approval, minimal documents.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹3,000 cashback</div>
+          <div class="product-link">Apply Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="products/home-loan.html" class="product-card">
+          <div class="product-icon purple"><i class="fas fa-house"></i></div>
+          <h3 class="product-title">Home Loan</h3>
+          <p class="product-desc">Flexible home loans from top banks and NBFCs. Best interest rates starting from 8.40% p.a.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹5,000 cashback</div>
+          <div class="product-link">Apply Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="products/business-loan.html" class="product-card">
+          <div class="product-icon orange"><i class="fas fa-briefcase"></i></div>
+          <h3 class="product-title">Business Loan</h3>
+          <p class="product-desc">Fuel your business growth with unsecured business loans up to ₹2 crore. Fast disbursal.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹4,000 cashback</div>
+          <div class="product-link">Apply Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="products/demat.html" class="product-card">
+          <div class="product-icon teal"><i class="fas fa-chart-line"></i></div>
+          <h3 class="product-title">Demat Account</h3>
+          <p class="product-desc">Open a free demat account with top brokers. Trade stocks, mutual funds, F&O seamlessly.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹700 cashback</div>
+          <div class="product-link">Open Account <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="products/investments.html" class="product-card">
+          <div class="product-icon indigo"><i class="fas fa-seedling"></i></div>
+          <h3 class="product-title">Mutual Funds & SIP</h3>
+          <p class="product-desc">Invest in top-rated mutual funds. Start SIP from just ₹500/month and grow your wealth.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹1,000 cashback</div>
+          <div class="product-link">Start Investing <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="products/credit-card.html" class="product-card">
+          <div class="product-icon red"><i class="fas fa-credit-card"></i></div>
+          <h3 class="product-title">Credit Card</h3>
+          <p class="product-desc">Premium credit cards with reward points, lounge access, and zero annual fees from top banks.</p>
+          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹2,000 cashback</div>
+          <div class="product-link">Get Card <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <!-- View All Card -->
+        <div class="product-card" style="background:var(--light-bg);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:16px;border:2px dashed var(--border-color);">
+          <div class="product-icon blue" style="margin-bottom:0;"><i class="fas fa-grid-2-plus"></i></div>
+          <h3 class="product-title">More Products</h3>
+          <p class="product-desc" style="font-size:0.825rem;">Vehicle Insurance, Gold Loans, FD, Credit Score, and 40+ more</p>
+          <a href="register.html" class="btn btn-primary btn-sm">View All Products</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       REWARDS SECTION
+  ====================================================== -->
+  <section class="rewards-section section-padding" id="rewards">
+    <div class="container">
+      <div class="rewards-inner">
+
+        <div class="rewards-content">
+          <span class="section-tag">Reward Program</span>
+          <h2 class="section-title">Earn Real Money on Every Financial Decision</h2>
+          <p>Our transparent reward system pays you instantly when your application gets approved. No points. No gimmicks. Real ₹ cashback.</p>
+
+          <div class="rewards-list">
+            <div class="reward-item">
+              <div class="reward-item-icon"><i class="fas fa-shield-halved"></i></div>
+              <div class="reward-item-info">
+                <div class="reward-item-product">Life / Health Insurance</div>
+                <div class="reward-item-desc">On policy issuance approval</div>
+              </div>
+              <div class="reward-item-amount">₹1,500</div>
+            </div>
+
+            <div class="reward-item">
+              <div class="reward-item-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+              <div class="reward-item-info">
+                <div class="reward-item-product">Personal Loan</div>
+                <div class="reward-item-desc">On loan disbursement</div>
+              </div>
+              <div class="reward-item-amount">₹3,000</div>
+            </div>
+
+            <div class="reward-item">
+              <div class="reward-item-icon"><i class="fas fa-house"></i></div>
+              <div class="reward-item-info">
+                <div class="reward-item-product">Home Loan</div>
+                <div class="reward-item-desc">On sanction letter</div>
+              </div>
+              <div class="reward-item-amount">₹5,000</div>
+            </div>
+
+            <div class="reward-item">
+              <div class="reward-item-icon"><i class="fas fa-chart-line"></i></div>
+              <div class="reward-item-info">
+                <div class="reward-item-product">Demat Account</div>
+                <div class="reward-item-desc">On account activation</div>
+              </div>
+              <div class="reward-item-amount">₹700</div>
+            </div>
+
+            <div class="reward-item">
+              <div class="reward-item-icon"><i class="fas fa-credit-card"></i></div>
+              <div class="reward-item-info">
+                <div class="reward-item-product">Credit Card</div>
+                <div class="reward-item-desc">On card approval</div>
+              </div>
+              <div class="reward-item-amount">₹2,000</div>
+            </div>
+          </div>
+
+          <a href="register.html" class="btn btn-accent btn-lg">
+            <i class="fas fa-coins"></i> Start Earning Rewards
+          </a>
+        </div>
+
+        <div class="rewards-visual">
+          <div class="reward-big-card">
+            <div class="reward-big-label">Maximum Single Reward</div>
+            <div class="reward-big-amount">₹5,000</div>
+            <div class="reward-big-sub">Home Loan approval reward</div>
+          </div>
+
+          <div class="reward-small-card">
+            <div class="reward-small-label">Total Paid Out</div>
+            <div class="reward-small-amount">₹2.5Cr+</div>
+            <div class="reward-small-type">To 10,000+ users</div>
+          </div>
+
+          <div class="reward-small-card">
+            <div class="reward-small-label">Avg per User</div>
+            <div class="reward-small-amount">₹4,200</div>
+            <div class="reward-small-type">Rewards earned</div>
+          </div>
+
+          <div class="reward-big-card" style="margin-top:0;">
+            <div class="reward-big-label">Payout Method</div>
+            <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:12px;">
+              <span style="background:rgba(255,255,255,0.1);color:#fff;padding:8px 14px;border-radius:8px;font-size:0.8rem;font-weight:600;"><i class="fas fa-university" style="margin-right:6px;"></i>Bank Transfer</span>
+              <span style="background:rgba(255,255,255,0.1);color:#fff;padding:8px 14px;border-radius:8px;font-size:0.8rem;font-weight:600;"><i class="fas fa-mobile-alt" style="margin-right:6px;"></i>UPI</span>
+              <span style="background:rgba(255,255,255,0.1);color:#fff;padding:8px 14px;border-radius:8px;font-size:0.8rem;font-weight:600;"><i class="fas fa-wallet" style="margin-right:6px;"></i>Wallet</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       HOW IT WORKS
+  ====================================================== -->
+  <section class="section-padding" id="how-it-works" style="background:var(--light-bg);">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">Simple Process</span>
+        <h2 class="section-title">How Finvestmart Works</h2>
+        <p class="section-subtitle">Getting rewards on your financial decisions is simple, transparent, and instant.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+          <h3 class="step-title">Create Free Account</h3>
+          <p class="step-desc">Sign up in 2 minutes with your mobile number and email. No documents needed to register.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon"><i class="fas fa-file-signature"></i></div>
+          <h3 class="step-title">Apply for Products</h3>
+          <p class="step-desc">Choose from 50+ financial products. Fill the form, submit documents, and track your application.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon"><i class="fas fa-coins"></i></div>
+          <h3 class="step-title">Claim Your Reward</h3>
+          <p class="step-desc">Once your application is approved, claim your cashback reward instantly via bank transfer or UPI.</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-48">
+        <a href="register.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-rocket"></i> Get Started Free
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       TESTIMONIALS
+  ====================================================== -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">Customer Stories</span>
+        <h2 class="section-title">What Our Users Say</h2>
+        <p class="section-subtitle">10,000+ users across India trust Finvestmart for smart financial decisions</p>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">"I applied for a personal loan through Finvestmart and got ₹3,000 cashback after disbursement. The process was smooth and the reward was credited to my bank account within 48 hours!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar avatar-blue">R</div>
+            <div class="author-info">
+              <div class="author-name">Rahul Sharma</div>
+              <div class="author-role">IT Professional, Bangalore</div>
+            </div>
+          </div>
+          <div class="testimonial-reward"><i class="fas fa-coins"></i> Earned ₹3,000 cashback</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">"Bought term insurance for my family and earned ₹1,500 cashback. I was skeptical at first, but Finvestmart delivered the reward as promised. Genuine platform!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar avatar-green">P</div>
+            <div class="author-info">
+              <div class="author-name">Priya Nair</div>
+              <div class="author-role">Business Owner, Chennai</div>
+            </div>
+          </div>
+          <div class="testimonial-reward"><i class="fas fa-coins"></i> Earned ₹1,500 cashback</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+          </div>
+          <p class="testimonial-text">"Opened Zerodha demat account and got ₹700 reward. The dashboard makes it easy to track all applications and rewards in one place. Highly recommended!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar avatar-purple">A</div>
+            <div class="author-info">
+              <div class="author-name">Amit Verma</div>
+              <div class="author-role">Stock Trader, Delhi</div>
+            </div>
+          </div>
+          <div class="testimonial-reward"><i class="fas fa-coins"></i> Earned ₹700 cashback</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">"Home loan was sanctioned and I got ₹5,000 cashback! This is the best financial platform I've used. Transparent process, no hidden conditions."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar avatar-orange">S</div>
+            <div class="author-info">
+              <div class="author-name">Sunita Patel</div>
+              <div class="author-role">Teacher, Ahmedabad</div>
+            </div>
+          </div>
+          <div class="testimonial-reward"><i class="fas fa-coins"></i> Earned ₹5,000 cashback</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECURITY TRUST BADGES
+  ====================================================== -->
+  <section style="padding:48px 0;background:var(--light-bg);border-top:1px solid var(--border-color);" id="about">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:2rem;color:var(--accent-color);margin-bottom:8px;"><i class="fas fa-lock"></i></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--primary-color);">SSL Secured</div>
+          <div style="font-size:0.72rem;color:var(--secondary-text);">256-bit encryption</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;color:var(--accent-color);margin-bottom:8px;"><i class="fas fa-certificate"></i></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--primary-color);">ISO Certified</div>
+          <div style="font-size:0.72rem;color:var(--secondary-text);">ISO 27001:2022</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;color:var(--accent-color);margin-bottom:8px;"><i class="fas fa-shield-check"></i></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--primary-color);">100% Safe</div>
+          <div style="font-size:0.72rem;color:var(--secondary-text);">Secure transactions</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;color:var(--accent-color);margin-bottom:8px;"><i class="fas fa-building-columns"></i></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--primary-color);">RBI Compliant</div>
+          <div style="font-size:0.72rem;color:var(--secondary-text);">Regulated platform</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;color:var(--accent-color);margin-bottom:8px;"><i class="fas fa-headset"></i></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--primary-color);">24/7 Support</div>
+          <div style="font-size:0.72rem;color:var(--secondary-text);">Always here to help</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       CTA SECTION
+  ====================================================== -->
+  <section class="cta-section section-padding">
+    <div class="container" style="position:relative;z-index:1;">
+      <span class="section-tag">Get Started Today</span>
+      <h2 class="section-title" style="color:#fff;max-width:600px;margin:0 auto 16px;">Start Earning Rewards on Your Financial Decisions Today</h2>
+      <p style="color:rgba(255,255,255,0.7);font-size:1rem;max-width:480px;margin:0 auto;">Join 10,000+ smart Indians who are earning cashback on every loan, insurance, and investment decision.</p>
+
+      <div class="cta-buttons">
+        <a href="register.html" class="btn btn-accent btn-lg">
+          <i class="fas fa-rocket"></i> Create Free Account
+        </a>
+        <a href="#products" class="btn btn-outline-white btn-lg">
+          <i class="fas fa-grid-2"></i> Browse Products
+        </a>
+      </div>
+
+      <div class="cta-trust">
+        <div class="cta-trust-item"><i class="fas fa-check-circle"></i> Free to join</div>
+        <div class="cta-trust-item"><i class="fas fa-check-circle"></i> No hidden fees</div>
+        <div class="cta-trust-item"><i class="fas fa-check-circle"></i> Instant rewards</div>
+        <div class="cta-trust-item"><i class="fas fa-check-circle"></i> 10,000+ users</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="margin-bottom:16px;">
+            <div class="nav-logo-icon">F</div>
+            Finvest<span>mart</span>
+          </div>
+          <p>India's trusted fintech rewards platform. Apply for loans, insurance, and investments — and earn real cashback rewards on every approved application.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="footer-social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Products</div>
+          <div class="footer-links">
+            <a href="products/insurance.html">Insurance</a>
+            <a href="products/personal-loan.html">Personal Loan</a>
+            <a href="products/home-loan.html">Home Loan</a>
+            <a href="products/business-loan.html">Business Loan</a>
+            <a href="products/demat.html">Demat Account</a>
+            <a href="products/investments.html">Investments</a>
+            <a href="products/credit-card.html">Credit Card</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">How It Works</a>
+            <a href="#">Rewards Program</a>
+            <a href="#">Partner With Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Support</div>
+          <div class="footer-links">
+            <a href="#">Help Center</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Refund Policy</a>
+            <a href="#">Grievance</a>
+          </div>
+          <div style="margin-top:20px;">
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-bottom:8px;">Contact</div>
+            <a href="mailto:support@finvestmart.com" style="font-size:0.8rem;color:rgba(255,255,255,0.6);">support@finvestmart.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2024 Finvestmart. All rights reserved. GSTIN: 27AABCF1234A1Z5</p>
+        <div class="footer-badges">
+          <div class="footer-badge"><i class="fas fa-lock"></i> SSL Secured</div>
+          <div class="footer-badge"><i class="fas fa-certificate"></i> ISO Certified</div>
+          <div class="footer-badge"><i class="fas fa-shield-check"></i> RBI Compliant</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
