@@ -316,17 +316,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* ── Add reveal class to cards ── */
-  document.querySelectorAll('.product-card, .testimonial-card, .step-card, .reward-item').forEach(el => {
-    el.classList.add('reveal');
-  });
-
 });
 
-/* ── Reveal CSS ── */
-const revealStyle = document.createElement('style');
-revealStyle.textContent = `
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
-`;
-document.head.appendChild(revealStyle);
+

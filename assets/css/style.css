@@ -167,6 +167,13 @@ p { color: var(--secondary-text); font-size: 1rem; line-height: 1.7; }
 .btn-full { width: 100%; justify-content: center; }
 
 /* ============================================================
+   MOBILE MENU – hidden by default on ALL screen sizes
+   ============================================================ */
+.mobile-menu {
+  display: none;
+}
+
+/* ============================================================
    NAVBAR
    ============================================================ */
 .navbar {
@@ -1856,12 +1863,12 @@ p { color: var(--secondary-text); font-size: 1rem; line-height: 1.7; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .mobile-menu {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 72px; left: 0; right: 0; bottom: 0;
     background: #fff;
     padding: 24px;
-    display: flex;
-    flex-direction: column;
     gap: 8px;
     z-index: 999;
     overflow-y: auto;
