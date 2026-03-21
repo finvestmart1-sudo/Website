@@ -103,6 +103,121 @@
 
     /* 7. Fix navbar z-index to stay above content */
     .navbar { z-index: 1000 !important; }
+
+    /* ── REWARDS SECTION FIXES ── */
+    .rewards-inner {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .rewards-content { display: block !important; }
+    .rewards-content .section-title { color: #fff; }
+    .rewards-content p { color: rgba(255,255,255,0.7); }
+    .rewards-list { margin: 32px 0 !important; display: flex !important; flex-direction: column !important; gap: 16px !important; }
+    .reward-item { display: flex !important; align-items: center; gap: 16px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px 22px; transition: all 0.3s ease; }
+    .reward-item:hover { background: rgba(255,255,255,0.12); transform: translateX(4px); }
+    .reward-item-icon { width: 46px; height: 46px; background: rgba(0,200,150,0.2); border-radius: 12px; display: flex !important; align-items: center; justify-content: center; color: #00C896; font-size: 1.1rem; flex-shrink: 0; }
+    .reward-item-info { flex: 1; }
+    .reward-item-product { font-size: 0.875rem; font-weight: 600; color: #fff; }
+    .reward-item-desc { font-size: 0.775rem; color: rgba(255,255,255,0.6); }
+    .reward-item-amount { font-size: 1.1rem; font-weight: 800; color: #00C896; white-space: nowrap; }
+    .rewards-visual { display: grid !important; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .reward-big-card { grid-column: span 2; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; padding: 28px; text-align: center; }
+    .reward-big-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+    .reward-big-amount { font-size: 2.5rem; font-weight: 800; color: #00C896; }
+    .reward-big-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .reward-small-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; text-align: center; }
+    .reward-small-label { font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+    .reward-small-amount { font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .reward-small-type { font-size: 0.7rem; color: #00C896; margin-top: 4px; font-weight: 600; }
+
+    /* ── HOW IT WORKS FIXES ── */
+    .steps-grid { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; margin-top: 16px; }
+    .step-card { text-align: center; position: relative; z-index: 1; display: block !important; }
+    .step-number { width: 72px; height: 72px; background: linear-gradient(135deg, #0A2540, #1a4a8a); border-radius: 50%; display: flex !important; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; color: #fff; margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(10,37,64,0.2); }
+    .step-icon { font-size: 1.5rem; margin-bottom: 16px; color: #00C896; display: block !important; }
+    .step-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #0A2540; }
+    .step-desc { font-size: 0.875rem; color: #6B7280; line-height: 1.6; }
+
+    /* ── TESTIMONIALS FIXES ── */
+    .testimonials-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 16px; }
+    .testimonial-card { display: block !important; background: #fff !important; border-radius: 24px; padding: 28px; border: 1px solid #E5E7EB; box-shadow: 0 1px 3px rgba(10,37,64,0.08); transition: all 0.3s ease; }
+    .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(10,37,64,0.14); }
+    .testimonial-stars { display: flex !important; gap: 4px; margin-bottom: 16px; }
+    .testimonial-stars i { color: #F59E0B; font-size: 0.875rem; }
+    .testimonial-text { font-size: 0.9rem; color: #6B7280; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { display: flex !important; align-items: center; gap: 12px; }
+    .author-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex !important; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .avatar-blue { background: linear-gradient(135deg, #0A2540, #1a4a8a); }
+    .avatar-green { background: linear-gradient(135deg, #00C896, #00a87e); }
+    .avatar-purple { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+    .avatar-orange { background: linear-gradient(135deg, #F59E0B, #D97706); }
+    .author-name { font-size: 0.9rem; font-weight: 700; color: #0A2540; }
+    .author-role { font-size: 0.775rem; color: #6B7280; }
+    .testimonial-reward { display: inline-flex !important; align-items: center; gap: 6px; background: rgba(0,200,150,0.1); color: #00C896; font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 100px; margin-top: 12px; }
+
+    /* ── TRUST SECTION ── */
+    .trust-section { padding: 48px 0; background: #F8FAFC; border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; }
+    .trust-logos { display: flex !important; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+    .trust-logo { display: flex !important; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; color: #9CA3AF; padding: 8px 16px; border-radius: 8px; }
+    .trust-logo:hover { color: #0A2540; }
+
+    /* ── PRODUCT ICONS & LABELS ── */
+    .product-icon { width: 52px; height: 52px; border-radius: 14px; display: flex !important; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 20px; }
+    .product-icon.blue { background: rgba(10,37,64,0.08); color: #0A2540; }
+    .product-icon.green { background: rgba(0,200,150,0.1); color: #00C896; }
+    .product-icon.purple { background: rgba(139,92,246,0.1); color: #8B5CF6; }
+    .product-icon.orange { background: rgba(245,158,11,0.1); color: #F59E0B; }
+    .product-icon.teal { background: rgba(20,184,166,0.1); color: #14B8A6; }
+    .product-icon.indigo { background: rgba(99,102,241,0.1); color: #6366F1; }
+    .product-icon.red { background: rgba(239,68,68,0.1); color: #EF4444; }
+    .product-title { font-size: 1.05rem; font-weight: 700; color: #0A2540; margin-bottom: 10px; }
+    .product-desc { font-size: 0.85rem; color: #6B7280; line-height: 1.6; margin-bottom: 16px; }
+    .product-reward { display: inline-flex !important; align-items: center; gap: 6px; background: rgba(0,200,150,0.1); color: #00C896; font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 100px; margin-bottom: 20px; }
+    .product-link { display: flex !important; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 600; color: #0A2540; }
+    .product-link:hover { color: #00C896; }
+
+    /* ── CTA SECTION ── */
+    .cta-section { background: linear-gradient(135deg, #0A2540 0%, #1a4a8a 50%, #0d3060 100%); text-align: center; position: relative; overflow: hidden; }
+    .cta-section .section-tag { background: rgba(0,200,150,0.2); color: #00ffbb; }
+    .cta-buttons { display: flex !important; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+    .cta-trust { display: flex !important; align-items: center; justify-content: center; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+    .cta-trust-item { display: flex !important; align-items: center; gap: 8px; color: rgba(255,255,255,0.6); font-size: 0.825rem; }
+    .cta-trust-item i { color: #00C896; }
+
+    /* ── FOOTER ── */
+    .footer { background: #0A2540 !important; padding: 64px 0 32px; display: block !important; }
+    .footer-grid { display: grid !important; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-col-title { font-size: 0.875rem; font-weight: 700; color: #fff; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-links { display: flex !important; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.875rem; color: rgba(255,255,255,0.5); }
+    .footer-links a:hover { color: #00C896; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex !important; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.825rem; color: rgba(255,255,255,0.4); }
+    .footer-badges { display: flex !important; gap: 8px; flex-wrap: wrap; }
+    .footer-badge { display: inline-flex !important; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+    .footer-badge i { color: #00C896; }
+    .footer-socials { display: flex !important; gap: 10px; margin-top: 16px; }
+    .footer-social-link { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex !important; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 0.875rem; }
+    .footer-social-link:hover { background: #00C896; color: #fff; }
+    .footer-brand p { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .rewards-inner { grid-template-columns: 1fr !important; }
+      .steps-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 768px) {
+      .testimonials-grid { grid-template-columns: 1fr !important; }
+      .rewards-visual { grid-template-columns: 1fr !important; }
+      .reward-big-card { grid-column: span 1 !important; }
+      .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .footer-bottom { flex-direction: column !important; text-align: center !important; }
+    }
   </style>
 </head>
 <body>
