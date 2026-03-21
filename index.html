@@ -52,32 +52,7 @@
       .nav-actions { display: flex !important; }
     }
 
-    /* 4. Products grid – force display */
-    .products-grid {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 24px;
-    }
-
-    .product-card {
-      display: block !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      background: #fff;
-      border-radius: 16px;
-      padding: 28px;
-      border: 1px solid #E5E7EB;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(10,37,64,0.14);
-      border-color: #00C896;
-    }
+    /* 4. Products grid – legacy class kept for any other use */
 
     /* 5. Hero section – ensure both columns show */
     .hero-inner {
@@ -433,83 +408,203 @@
   <!-- ======================================================
        PRODUCTS SECTION
   ====================================================== -->
-  <section class="section-padding" id="products">
+  <section class="section-padding" id="products" style="background:#F8FAFC;">
     <div class="container">
-      <div class="text-center">
+      <div class="text-center" style="margin-bottom:40px;">
         <span class="section-tag">Our Products</span>
         <h2 class="section-title">Financial Products With <span style="color:var(--accent-color)">Instant Rewards</span></h2>
-        <p class="section-subtitle">Choose from 50+ financial products and earn cashback rewards on every approved application</p>
+        <p class="section-subtitle">Choose from 50+ financial products and earn cashback on every approved application</p>
       </div>
 
-      <div class="products-grid">
-
-        <a href="products/insurance.html" class="product-card">
-          <div class="product-icon blue"><i class="fas fa-shield-halved"></i></div>
-          <h3 class="product-title">Life & Health Insurance</h3>
-          <p class="product-desc">Term plans, health insurance, ULIP from 20+ top insurers. Protect your family while earning rewards.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹1,500 cashback</div>
-          <div class="product-link">Explore Plans <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="products/personal-loan.html" class="product-card">
-          <div class="product-icon green"><i class="fas fa-hand-holding-dollar"></i></div>
-          <h3 class="product-title">Personal Loan</h3>
-          <p class="product-desc">Instant personal loans from ₹50,000 to ₹50 lakhs. Quick approval, minimal documents.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹3,000 cashback</div>
-          <div class="product-link">Apply Now <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="products/home-loan.html" class="product-card">
-          <div class="product-icon purple"><i class="fas fa-house"></i></div>
-          <h3 class="product-title">Home Loan</h3>
-          <p class="product-desc">Flexible home loans from top banks and NBFCs. Best interest rates starting from 8.40% p.a.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹5,000 cashback</div>
-          <div class="product-link">Apply Now <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="products/business-loan.html" class="product-card">
-          <div class="product-icon orange"><i class="fas fa-briefcase"></i></div>
-          <h3 class="product-title">Business Loan</h3>
-          <p class="product-desc">Fuel your business growth with unsecured business loans up to ₹2 crore. Fast disbursal.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹4,000 cashback</div>
-          <div class="product-link">Apply Now <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="products/demat.html" class="product-card">
-          <div class="product-icon teal"><i class="fas fa-chart-line"></i></div>
-          <h3 class="product-title">Demat Account</h3>
-          <p class="product-desc">Open a free demat account with top brokers. Trade stocks, mutual funds, F&amp;O seamlessly.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹700 cashback</div>
-          <div class="product-link">Open Account <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="products/investments.html" class="product-card">
-          <div class="product-icon indigo"><i class="fas fa-seedling"></i></div>
-          <h3 class="product-title">Mutual Funds &amp; SIP</h3>
-          <p class="product-desc">Invest in top-rated mutual funds. Start SIP from just ₹500/month and grow your wealth.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹1,000 cashback</div>
-          <div class="product-link">Start Investing <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="products/credit-card.html" class="product-card">
-          <div class="product-icon red"><i class="fas fa-credit-card"></i></div>
-          <h3 class="product-title">Credit Card</h3>
-          <p class="product-desc">Premium credit cards with reward points, lounge access, and zero annual fees from top banks.</p>
-          <div class="product-reward"><i class="fas fa-coins"></i> Up to ₹2,000 cashback</div>
-          <div class="product-link">Get Card <i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <!-- View All Card -->
-        <div class="product-card" style="background:var(--light-bg);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:16px;border:2px dashed var(--border-color);">
-          <div class="product-icon blue" style="margin-bottom:0;"><i class="fas fa-grid-2-plus"></i></div>
-          <h3 class="product-title">More Products</h3>
-          <p class="product-desc" style="font-size:0.825rem;">Vehicle Insurance, Gold Loans, FD, Credit Score, and 40+ more</p>
-          <a href="register.html" class="btn btn-primary btn-sm">View All Products</a>
+      <!-- Loans -->
+      <div style="margin-bottom:40px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <div style="width:4px;height:22px;background:linear-gradient(180deg,#0A2540,#1a4a8a);border-radius:4px;"></div>
+          <h3 style="font-size:1.05rem;font-weight:700;color:#0A2540;margin:0;">Loans</h3>
         </div>
+        <div class="pb-tile-grid">
+          <a href="products/personal-loan.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#dcfce7;color:#16a34a;">Up to ₹3,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(0,200,150,0.12);color:#00C896;"><i class="fas fa-hand-holding-dollar"></i></div>
+            <div class="pb-tile-name">Personal Loan</div>
+          </a>
+          <a href="products/home-loan.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#ede9fe;color:#7c3aed;">Up to ₹5,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(139,92,246,0.12);color:#8B5CF6;"><i class="fas fa-house"></i></div>
+            <div class="pb-tile-name">Home Loan</div>
+          </a>
+          <a href="products/business-loan.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#fff7ed;color:#c2410c;">Up to ₹4,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(245,158,11,0.12);color:#F59E0B;"><i class="fas fa-briefcase"></i></div>
+            <div class="pb-tile-name">Business Loan</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#dcfce7;color:#16a34a;">Up to ₹3,500 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(20,184,166,0.12);color:#14B8A6;"><i class="fas fa-car"></i></div>
+            <div class="pb-tile-name">Car Loan</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#fef9c3;color:#b45309;">Up to ₹2,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(234,179,8,0.12);color:#CA8A04;"><i class="fas fa-coins"></i></div>
+            <div class="pb-tile-name">Gold Loan</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#f0fdf4;color:#15803d;">Up to ₹1,500 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(99,102,241,0.12);color:#6366F1;"><i class="fas fa-graduation-cap"></i></div>
+            <div class="pb-tile-name">Education Loan</div>
+          </a>
+        </div>
+      </div>
 
+      <!-- Insurance -->
+      <div style="margin-bottom:40px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <div style="width:4px;height:22px;background:linear-gradient(180deg,#0A2540,#1a4a8a);border-radius:4px;"></div>
+          <h3 style="font-size:1.05rem;font-weight:700;color:#0A2540;margin:0;">Insurance</h3>
+        </div>
+        <div class="pb-tile-grid">
+          <a href="products/insurance.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#dcfce7;color:#16a34a;">Up to ₹1,500 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(10,37,64,0.08);color:#0A2540;"><i class="fas fa-shield-halved"></i></div>
+            <div class="pb-tile-name">Term Life Insurance</div>
+          </a>
+          <a href="products/insurance.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#fce7f3;color:#be185d;">Up to ₹1,200 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(239,68,68,0.1);color:#EF4444;"><i class="fas fa-heart-pulse"></i></div>
+            <div class="pb-tile-name">Health Insurance</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#eff6ff;color:#1d4ed8;">Up to ₹800 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(59,130,246,0.1);color:#3B82F6;"><i class="fas fa-car-burst"></i></div>
+            <div class="pb-tile-name">Car Insurance</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#fef9c3;color:#b45309;">Up to ₹500 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(234,179,8,0.1);color:#CA8A04;"><i class="fas fa-motorcycle"></i></div>
+            <div class="pb-tile-name">2-Wheeler Insurance</div>
+          </a>
+          <a href="products/insurance.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#dcfce7;color:#16a34a;">Up to ₹1,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(16,185,129,0.1);color:#10B981;"><i class="fas fa-users"></i></div>
+            <div class="pb-tile-name">Family Health Plan</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#ede9fe;color:#7c3aed;">Up to ₹700 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(139,92,246,0.1);color:#8B5CF6;"><i class="fas fa-plane"></i></div>
+            <div class="pb-tile-name">Travel Insurance</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Investments & Others -->
+      <div style="margin-bottom:40px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <div style="width:4px;height:22px;background:linear-gradient(180deg,#0A2540,#1a4a8a);border-radius:4px;"></div>
+          <h3 style="font-size:1.05rem;font-weight:700;color:#0A2540;margin:0;">Investments &amp; Others</h3>
+        </div>
+        <div class="pb-tile-grid">
+          <a href="products/demat.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#dcfce7;color:#16a34a;">Up to ₹700 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(20,184,166,0.12);color:#14B8A6;"><i class="fas fa-chart-line"></i></div>
+            <div class="pb-tile-name">Demat Account</div>
+          </a>
+          <a href="products/investments.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#eff6ff;color:#1d4ed8;">Up to ₹1,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(99,102,241,0.12);color:#6366F1;"><i class="fas fa-seedling"></i></div>
+            <div class="pb-tile-name">Mutual Funds &amp; SIP</div>
+          </a>
+          <a href="products/credit-card.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#fce7f3;color:#be185d;">Up to ₹2,000 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(239,68,68,0.1);color:#EF4444;"><i class="fas fa-credit-card"></i></div>
+            <div class="pb-tile-name">Credit Card</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#fef9c3;color:#b45309;">Up to ₹600 cashback</div>
+            <div class="pb-tile-icon" style="background:rgba(234,179,8,0.1);color:#CA8A04;"><i class="fas fa-piggy-bank"></i></div>
+            <div class="pb-tile-name">Fixed Deposit</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#f0fdf4;color:#15803d;">Free check</div>
+            <div class="pb-tile-icon" style="background:rgba(16,185,129,0.1);color:#10B981;"><i class="fas fa-star"></i></div>
+            <div class="pb-tile-name">Credit Score</div>
+          </a>
+          <a href="register.html" class="pb-tile">
+            <div class="pb-tile-badge" style="background:#ede9fe;color:#7c3aed;">40+ products</div>
+            <div class="pb-tile-icon" style="background:rgba(99,102,241,0.12);color:#6366F1;"><i class="fas fa-grid-2-plus"></i></div>
+            <div class="pb-tile-name">View All</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="register.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-rocket"></i> Apply &amp; Earn Rewards
+        </a>
       </div>
     </div>
   </section>
+
+  <style>
+    .pb-tile-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+    .pb-tile {
+      background: #fff;
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      padding: 20px 12px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .pb-tile:hover {
+      border-color: #00C896;
+      box-shadow: 0 8px 24px rgba(0,200,150,0.15);
+      transform: translateY(-3px);
+    }
+    .pb-tile-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .pb-tile-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+    .pb-tile-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0A2540;
+      line-height: 1.3;
+    }
+    @media (max-width: 1024px) {
+      .pb-tile-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .pb-tile-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .pb-tile { padding: 14px 8px 12px; }
+      .pb-tile-icon { width: 52px; height: 52px; font-size: 1.3rem; }
+      .pb-tile-name { font-size: 0.75rem; }
+    }
+    @media (max-width: 400px) {
+      .pb-tile-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
 
   <!-- ======================================================
        REWARDS SECTION
