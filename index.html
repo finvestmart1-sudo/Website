@@ -11,8 +11,98 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* Extra homepage-specific styles */
+    /* ── Homepage specific ── */
     .hero-stat-divider { width: 1px; height: 40px; background: var(--border-color); }
+
+    /* ── CRITICAL LAYOUT FIXES ── */
+
+    /* 1. Force hide mobile menu on desktop */
+    .mobile-menu {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    /* 2. Show mobile menu ONLY on small screens when toggled open */
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: flex !important;
+        visibility: visible !important;
+        flex-direction: column;
+        position: fixed;
+        top: 72px; left: 0; right: 0; bottom: 0;
+        background: #fff;
+        padding: 24px;
+        gap: 8px;
+        z-index: 999;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        transition: all 0.3s ease;
+      }
+      .mobile-menu.open {
+        transform: translateX(0) !important;
+      }
+      .nav-links { display: none !important; }
+      .hamburger { display: flex !important; }
+    }
+
+    /* 3. Ensure hamburger is hidden on desktop */
+    @media (min-width: 769px) {
+      .hamburger { display: none !important; }
+      .nav-links { display: flex !important; }
+      .nav-actions { display: flex !important; }
+    }
+
+    /* 4. Products grid – force display */
+    .products-grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .product-card {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid #E5E7EB;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(10,37,64,0.14);
+      border-color: #00C896;
+    }
+
+    /* 5. Hero section – ensure both columns show */
+    .hero-inner {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-content {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr !important; }
+      .hero-visual { display: none !important; }
+    }
+
+    /* 6. Ensure section padding is correct */
+    .section-padding { padding: 96px 0; }
+
+    /* 7. Fix navbar z-index to stay above content */
+    .navbar { z-index: 1000 !important; }
   </style>
 </head>
 <body>
