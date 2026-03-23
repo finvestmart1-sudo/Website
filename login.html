@@ -94,6 +94,16 @@
           <div class="auth-footer">
             Don't have an account? <a href="register.html">Create Free Account</a>
           </div>
+
+          <div class="form-divider" style="margin-top:20px;"><span>or try demo</span></div>
+          <div style="display:flex;gap:12px;margin-top:4px;">
+            <button type="button" id="demoUserBtn" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:2px solid #E5E7EB;border-radius:12px;background:#fff;font-size:0.85rem;font-weight:600;color:#374151;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+              <i class="fas fa-user"></i> Demo User
+            </button>
+            <button type="button" id="demoAdminBtn" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:2px solid #E5E7EB;border-radius:12px;background:#fff;font-size:0.85rem;font-weight:600;color:#374151;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+              <i class="fas fa-user-shield"></i> Demo Admin
+            </button>
+          </div>
         </div>
 
       </div>
@@ -239,6 +249,16 @@
         input.type = input.type === 'password' ? 'text' : 'password';
         this.querySelector('i').className = input.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
       });
+    });
+
+    // ── Demo buttons ──
+    document.getElementById('demoUserBtn').addEventListener('click', function() {
+      sessionStorage.setItem('finvestDemoMode', 'user');
+      window.location.href = 'dashboard.html';
+    });
+    document.getElementById('demoAdminBtn').addEventListener('click', function() {
+      sessionStorage.setItem('finvestDemoMode', 'admin');
+      window.location.href = 'dashboard.html';
     });
   </script>
 </body>

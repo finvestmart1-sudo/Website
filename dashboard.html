@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    body { background: var(--light-bg); }
+    body { background: var(--light-bg); visibility: hidden; }
     .reward-claim-card { background:#fff; border-radius:var(--radius-xl); border:1px solid var(--border-color); overflow:hidden; margin-bottom:24px; }
     .reward-claim-card-header { background:linear-gradient(135deg,var(--primary-color),#1a4a8a); padding:20px 24px; display:flex; align-items:center; justify-content:space-between; }
     .reward-claim-card-header h3 { color:#fff; font-size:1rem; }
@@ -441,37 +441,123 @@
 
   <script src="assets/js/main.js"></script>
 
-  <!-- Firebase Auth Guard: hides page until login is confirmed -->
+  <!-- Firebase Auth Guard + Demo Mode + Firestore Data Loading -->
   <script type="module">
-    document.body.style.visibility = 'hidden';
+    const demoMode = sessionStorage.getItem('finvestDemoMode');
 
-    // Fallback: if Firebase fails to respond within 8s, redirect to login
-    const authTimeout = setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 8000);
+    function getGreeting() {
+      const h = new Date().getHours();
+      return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    }
 
-    try {
-      const { auth } = await import('./assets/js/firebase-config.js');
-      const { onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js');
+    function applyUserInfo(name, email) {
+      const nameEl   = document.querySelector('.sidebar-user-name');
+      const emailEl  = document.querySelector('.sidebar-user-email');
+      const greetEl  = document.querySelector('.dashboard-greeting h1');
+      const avatarEl = document.querySelector('.sidebar-user-avatar');
+      const initials = name.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2) || name.slice(0, 2).toUpperCase();
+      if (nameEl)   nameEl.textContent  = name;
+      if (emailEl)  emailEl.textContent = email;
+      if (greetEl)  greetEl.textContent = getGreeting() + ', ' + name.split(' ')[0] + '! 👋';
+      if (avatarEl) avatarEl.textContent = initials;
+    }
 
-      onAuthStateChanged(auth, user => {
-        clearTimeout(authTimeout);
-        if (user) {
-          document.body.style.visibility = 'visible';
-          // Update sidebar with real user info
-          const nameEl  = document.querySelector('.sidebar-user-name');
-          const emailEl = document.querySelector('.sidebar-user-email');
-          const greetEl = document.querySelector('.dashboard-greeting h1');
-          if (nameEl)  nameEl.textContent  = user.displayName || user.email.split('@')[0];
-          if (emailEl) emailEl.textContent = user.email;
-          if (greetEl) greetEl.textContent = 'Welcome, ' + (user.displayName || user.email.split('@')[0]) + '! 👋';
-        } else {
+    function applyStats(total, apps, pending, paid) {
+      const vals = document.querySelectorAll('.stat-card-value');
+      const fmt = n => Number(n).toLocaleString('en-IN');
+      if (vals[0]) { vals[0].dataset.target = total;   vals[0].textContent = '₹' + fmt(total); }
+      if (vals[1]) { vals[1].dataset.target = apps;    vals[1].textContent = apps; }
+      if (vals[2]) { vals[2].dataset.target = pending; vals[2].textContent = '₹' + fmt(pending); }
+      if (vals[3]) { vals[3].dataset.target = paid;    vals[3].textContent = '₹' + fmt(paid); }
+      if (!total && !apps && !pending && !paid) {
+        document.querySelectorAll('.stat-card-change').forEach(el => { el.className = 'stat-card-change'; el.innerHTML = '<i class="fas fa-info-circle"></i> No activity yet'; });
+      }
+    }
+
+    function showNoData() {
+      const empty = (icon, msg) => `<div style="text-align:center;padding:40px 24px;color:var(--secondary-text);">
+        <i class="fas ${icon}" style="font-size:2rem;margin-bottom:12px;display:block;opacity:0.35;"></i>
+        <p style="margin:0;font-size:0.875rem;">${msg}</p></div>`;
+      const appDiv = document.querySelector('#section-applications .card-body > div');
+      if (appDiv) appDiv.innerHTML = empty('fa-file-alt', 'No applications yet. <a href="index.html#products" style="color:var(--accent-color);">Browse products</a> to get started.');
+      const rewardDiv = document.querySelector('#section-rewards .reward-dashboard-card');
+      if (rewardDiv) rewardDiv.innerHTML = empty('fa-coins', 'No rewards yet. Apply for products to earn rewards.');
+      const claimTbody = document.querySelector('#section-claim tbody');
+      if (claimTbody) claimTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--secondary-text);">No rewards to claim yet.</td></tr>';
+      const payTbody = document.querySelector('#section-payouts tbody');
+      if (payTbody) payTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--secondary-text);">No payouts yet.</td></tr>';
+      const badge = document.querySelector('.sidebar-badge');
+      if (badge) badge.textContent = '0';
+    }
+
+    function wireLogout(auth, signOutFn) {
+      document.querySelectorAll('a[href="api/auth/logout.php"]').forEach(link => {
+        link.setAttribute('href', '#');
+        link.addEventListener('click', async e => {
+          e.preventDefault();
+          sessionStorage.removeItem('finvestDemoMode');
+          if (auth && signOutFn) await signOutFn(auth).catch(() => {});
           window.location.href = 'login.html';
-        }
+        });
       });
-    } catch (e) {
-      clearTimeout(authTimeout);
-      window.location.href = 'login.html';
+    }
+
+    // ── Demo User: show empty/new-user dashboard ──
+    if (demoMode === 'user') {
+      document.body.style.visibility = 'visible';
+      applyUserInfo('Demo User', 'demo@finvestmart.com');
+      applyStats(0, 0, 0, 0);
+      showNoData();
+      wireLogout(null, null);
+
+    // ── Demo Admin: show dashboard with sample data ──
+    } else if (demoMode === 'admin') {
+      document.body.style.visibility = 'visible';
+      applyUserInfo('Demo Admin', 'admin@finvestmart.com');
+      wireLogout(null, null);
+
+    // ── Real Firebase user ──
+    } else {
+      const authTimeout = setTimeout(() => { window.location.href = 'login.html'; }, 8000);
+      try {
+        const { auth, db } = await import('./assets/js/firebase-config.js');
+        const { onAuthStateChanged, signOut } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js');
+        const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+
+        onAuthStateChanged(auth, async user => {
+          clearTimeout(authTimeout);
+          if (!user) { window.location.href = 'login.html'; return; }
+
+          document.body.style.visibility = 'visible';
+          const displayName = user.displayName || user.email.split('@')[0];
+          applyUserInfo(displayName, user.email);
+          wireLogout(auth, signOut);
+
+          // Load Firestore user data
+          try {
+            const snap = await getDoc(doc(db, 'users', user.uid));
+            if (snap.exists()) {
+              const d = snap.data();
+              const fullName = ((d.firstName || '') + ' ' + (d.lastName || '')).trim() || displayName;
+              applyUserInfo(fullName, user.email);
+              const total   = d.totalRewards   || 0;
+              const apps    = d.applications   || 0;
+              const pending = d.pendingRewards  || 0;
+              const paid    = d.paidOut         || 0;
+              applyStats(total, apps, pending, paid);
+              if (!total && !apps && !pending && !paid) showNoData();
+            } else {
+              applyStats(0, 0, 0, 0);
+              showNoData();
+            }
+          } catch (_) {
+            applyStats(0, 0, 0, 0);
+          }
+        });
+      } catch (e) {
+        clearTimeout(authTimeout);
+        window.location.href = 'login.html';
+      }
     }
   </script>
 
