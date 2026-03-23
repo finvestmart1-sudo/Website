@@ -19,12 +19,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebas
 
 // ▼▼▼ PASTE YOUR FIREBASE CONFIG HERE ▼▼▼
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey:            "AIzaSyAENzxQxUZKyoHon049Swm5Xby3Xn-TUv4",
+  authDomain:        "finvestmart-ddb3e.firebaseapp.com",
+  projectId:         "finvestmart-ddb3e",
+  storageBucket:     "finvestmart-ddb3e.firebasestorage.app",
+  messagingSenderId: "237870571612",
+  appId:             "1:237870571612:web:48a02f3213fb1f27370699",
+  measurementId:     "G-QWS4D61W3H"
 };
 // ▲▲▲ END OF CONFIG ▲▲▲
 
