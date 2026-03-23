@@ -13,7 +13,7 @@
       → Start in "test mode" → Choose region → Done
    ============================================================ */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -29,7 +29,8 @@ const firebaseConfig = {
 };
 // ▲▲▲ END OF CONFIG ▲▲▲
 
-const app      = initializeApp(firebaseConfig);
+// Re-use the existing app if already initialized (prevents duplicate-app error)
+const app      = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth     = getAuth(app);
 const db       = getFirestore(app);
 const provider = new GoogleAuthProvider();
