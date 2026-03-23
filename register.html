@@ -12,6 +12,20 @@
     .password-wrapper { position: relative; }
     .password-wrapper .form-input { padding-right: 44px; }
     .password-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; color: var(--secondary-text); font-size: 0.875rem; cursor: pointer; border: none; }
+    .google-btn {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 14px; border: 2px solid #E5E7EB; border-radius: 12px; background: #fff;
+      font-size: 0.9rem; font-weight: 600; color: #374151; cursor: pointer;
+      transition: all 0.2s ease; font-family: inherit; margin-bottom: 8px;
+    }
+    .google-btn:hover { border-color: #4285F4; background: #F8FAFF; }
+    .google-btn img { width: 20px; height: 20px; }
+    .auth-error {
+      background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626;
+      padding: 12px 16px; border-radius: 10px; font-size: 0.85rem;
+      margin-bottom: 16px; display: none;
+    }
+    .auth-error.show { display: block; }
   </style>
 </head>
 <body>
@@ -29,7 +43,6 @@
             <h2 class="auth-left-title">Start earning rewards on your financial decisions</h2>
             <p class="auth-left-sub">Join 10,000+ users who are earning cashback on every loan, insurance, and investment application.</p>
           </div>
-
           <div class="auth-benefits">
             <div class="auth-benefit"><i class="fas fa-coins"></i> Earn up to ₹5,000 per application</div>
             <div class="auth-benefit"><i class="fas fa-bolt"></i> Instant reward on approval</div>
@@ -37,7 +50,6 @@
             <div class="auth-benefit"><i class="fas fa-shield-check"></i> 100% secure & transparent</div>
             <div class="auth-benefit"><i class="fas fa-headset"></i> Dedicated support team</div>
           </div>
-
           <div style="margin-top:32px;padding:20px;background:rgba(0,200,150,0.1);border-radius:12px;border:1px solid rgba(0,200,150,0.2);">
             <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);margin-bottom:4px;">Total Rewards Paid</div>
             <div style="font-size:1.75rem;font-weight:800;color:var(--accent-color);font-family:'Poppins',sans-serif;">₹2.5 Crore+</div>
@@ -47,36 +59,47 @@
 
         <!-- Right Panel -->
         <div class="auth-right">
-          <div style="margin-bottom:32px;">
+          <div style="margin-bottom:24px;">
             <h2 class="auth-right-title">Create Your Account</h2>
             <p class="auth-right-sub">Free forever. Start earning rewards in 2 minutes.</p>
           </div>
+
+          <!-- Google Sign-Up -->
+          <button class="google-btn" id="googleRegisterBtn" type="button">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+            Sign up with Google
+          </button>
+
+          <div class="form-divider"><span>or register with email</span></div>
+
+          <!-- Error box -->
+          <div class="auth-error" id="registerError"></div>
 
           <form id="registerForm" novalidate>
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">First Name *</label>
-                <input type="text" name="first_name" class="form-input" placeholder="Rahul" required />
+                <input type="text" name="first_name" id="regFirstName" class="form-input" placeholder="Saurav" required />
               </div>
               <div class="form-group">
                 <label class="form-label">Last Name *</label>
-                <input type="text" name="last_name" class="form-input" placeholder="Sharma" required />
+                <input type="text" name="last_name" id="regLastName" class="form-input" placeholder="Kumar" required />
               </div>
             </div>
 
             <div class="form-group">
               <label class="form-label">Email Address *</label>
-              <input type="email" name="email" class="form-input" placeholder="rahul@example.com" required />
+              <input type="email" name="email" id="regEmail" class="form-input" placeholder="you@example.com" required />
             </div>
 
             <div class="form-group">
               <label class="form-label">Mobile Number *</label>
-              <input type="tel" name="phone" class="form-input" placeholder="9876543210" maxlength="10" required />
+              <input type="tel" name="phone" id="regPhone" class="form-input" placeholder="9876543210" maxlength="10" required />
             </div>
 
             <div class="form-group">
               <label class="form-label">City</label>
-              <select name="city" class="form-input form-select">
+              <select name="city" id="regCity" class="form-input form-select">
                 <option value="">Select your city</option>
                 <option>Mumbai</option><option>Delhi</option><option>Bangalore</option>
                 <option>Hyderabad</option><option>Chennai</option><option>Pune</option>
@@ -88,7 +111,7 @@
             <div class="form-group">
               <label class="form-label">Password *</label>
               <div class="password-wrapper">
-                <input type="password" name="password" class="form-input" placeholder="Min. 8 characters" minlength="8" required />
+                <input type="password" name="password" id="regPassword" class="form-input" placeholder="Min. 8 characters" minlength="8" required />
                 <button type="button" class="password-toggle"><i class="fas fa-eye"></i></button>
               </div>
             </div>
@@ -96,19 +119,19 @@
             <div class="form-group">
               <label class="form-label">Confirm Password *</label>
               <div class="password-wrapper">
-                <input type="password" name="confirm_password" id="confirmPassword" class="form-input" placeholder="Repeat password" required />
+                <input type="password" name="confirm_password" id="regConfirmPassword" class="form-input" placeholder="Repeat password" required />
                 <button type="button" class="password-toggle"><i class="fas fa-eye"></i></button>
               </div>
             </div>
 
             <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;">
-              <input type="checkbox" id="agreeTerms" name="agree_terms" style="margin-top:3px;accent-color:var(--primary-color);" required />
+              <input type="checkbox" id="agreeTerms" style="margin-top:3px;accent-color:var(--primary-color);" required />
               <label for="agreeTerms" style="font-size:0.825rem;color:var(--secondary-text);cursor:pointer;">
                 I agree to the <a href="#" style="color:var(--primary-color);font-weight:600;">Terms of Service</a> and <a href="#" style="color:var(--primary-color);font-weight:600;">Privacy Policy</a> of Finvestmart
               </label>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">
+            <button type="submit" class="btn btn-primary btn-full" id="registerBtn">
               <i class="fas fa-user-plus"></i> Create Free Account
             </button>
           </form>
@@ -120,7 +143,6 @@
           <div style="text-align:center;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
             <span style="font-size:0.72rem;color:var(--secondary-text);display:flex;align-items:center;gap:4px;"><i class="fas fa-lock" style="color:var(--accent-color);"></i> SSL Secured</span>
             <span style="font-size:0.72rem;color:var(--secondary-text);display:flex;align-items:center;gap:4px;"><i class="fas fa-shield-check" style="color:var(--accent-color);"></i> Safe & Secure</span>
-            <span style="font-size:0.72rem;color:var(--secondary-text);display:flex;align-items:center;gap:4px;"><i class="fas fa-certificate" style="color:var(--accent-color);"></i> ISO Certified</span>
           </div>
         </div>
 
@@ -128,18 +150,147 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js"></script>
-  <script>
-    // Password match validation
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      const pwd = this.querySelector('[name="password"]').value;
-      const cpwd = document.getElementById('confirmPassword').value;
-      if (pwd !== cpwd) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        if (window.showToast) showToast('Passwords do not match!', 'error');
-        document.getElementById('confirmPassword').style.borderColor = '#EF4444';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithPopup,
+      GoogleAuthProvider,
+      updateProfile,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    let auth, db, provider;
+    try {
+      const mod = await import('./assets/js/firebase-config.js');
+      auth     = mod.auth;
+      db       = mod.db;
+      provider = mod.provider;
+    } catch(e) {
+      showError('Firebase not configured. Please set up firebase-config.js');
+    }
+
+    if (auth) {
+      onAuthStateChanged(auth, user => {
+        if (user) window.location.href = 'dashboard.html';
+      });
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('registerError');
+      el.textContent = msg;
+      el.classList.add('show');
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function hideError() {
+      document.getElementById('registerError').classList.remove('show');
+    }
+    function setLoading(loading) {
+      const btn = document.getElementById('registerBtn');
+      btn.disabled = loading;
+      btn.innerHTML = loading
+        ? '<span class="loading-spinner"></span> Creating Account...'
+        : '<i class="fas fa-user-plus"></i> Create Free Account';
+    }
+
+    async function saveUserToFirestore(uid, data) {
+      const ref = doc(db, 'users', uid);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          ...data,
+          totalRewards:   0,
+          pendingRewards: 0,
+          paidOut:        0,
+          createdAt:      serverTimestamp()
+        });
       }
+    }
+
+    // ── Email Registration ──
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      hideError();
+
+      const firstName = document.getElementById('regFirstName').value.trim();
+      const lastName  = document.getElementById('regLastName').value.trim();
+      const email     = document.getElementById('regEmail').value.trim();
+      const phone     = document.getElementById('regPhone').value.trim();
+      const city      = document.getElementById('regCity').value;
+      const password  = document.getElementById('regPassword').value;
+      const confirm   = document.getElementById('regConfirmPassword').value;
+      const agreed    = document.getElementById('agreeTerms').checked;
+
+      if (!firstName || !lastName || !email || !phone || !password) {
+        showError('Please fill in all required fields.'); return;
+      }
+      if (!/^[6-9]\d{9}$/.test(phone)) {
+        showError('Enter a valid 10-digit Indian mobile number.'); return;
+      }
+      if (password.length < 8) {
+        showError('Password must be at least 8 characters.'); return;
+      }
+      if (password !== confirm) {
+        showError('Passwords do not match.'); return;
+      }
+      if (!agreed) {
+        showError('Please agree to the Terms of Service.'); return;
+      }
+
+      setLoading(true);
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(cred.user, { displayName: `${firstName} ${lastName}` });
+        await saveUserToFirestore(cred.user.uid, { firstName, lastName, email, phone, city, photoURL: '' });
+        window.location.href = 'dashboard.html';
+      } catch(err) {
+        setLoading(false);
+        const msgs = {
+          'auth/email-already-in-use': 'This email is already registered. Please log in.',
+          'auth/invalid-email':        'Invalid email address.',
+          'auth/weak-password':        'Password is too weak. Use at least 8 characters.'
+        };
+        showError(msgs[err.code] || 'Registration failed. Please try again.');
+      }
+    });
+
+    // ── Google Sign-Up ──
+    document.getElementById('googleRegisterBtn').addEventListener('click', async function() {
+      hideError();
+      this.disabled = true;
+      this.innerHTML = '<span class="loading-spinner"></span> Connecting to Google...';
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const nameParts = (user.displayName || '').split(' ');
+        await saveUserToFirestore(user.uid, {
+          firstName: nameParts[0] || '',
+          lastName:  nameParts.slice(1).join(' ') || '',
+          email:     user.email,
+          phone:     user.phoneNumber || '',
+          city:      '',
+          photoURL:  user.photoURL || ''
+        });
+        window.location.href = 'dashboard.html';
+      } catch(err) {
+        this.disabled = false;
+        this.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:20px;height:20px;"/> Sign up with Google';
+        if (err.code !== 'auth/popup-closed-by-user') {
+          showError('Google sign-up failed. Try again.');
+        }
+      }
+    });
+
+    // ── Password Toggle ──
+    document.querySelectorAll('.password-toggle').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        this.querySelector('i').className = input.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+      });
     });
   </script>
 </body>

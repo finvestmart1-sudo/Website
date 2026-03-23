@@ -12,6 +12,22 @@
     .password-wrapper { position: relative; }
     .password-wrapper .form-input { padding-right: 44px; }
     .password-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; color: var(--secondary-text); font-size: 0.875rem; cursor: pointer; border: none; }
+    .google-btn {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 14px; border: 2px solid #E5E7EB; border-radius: 12px; background: #fff;
+      font-size: 0.9rem; font-weight: 600; color: #374151; cursor: pointer;
+      transition: all 0.2s ease; font-family: inherit;
+    }
+    .google-btn:hover { border-color: #4285F4; background: #F8FAFF; }
+    .google-btn img { width: 20px; height: 20px; }
+    .auth-error {
+      background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626;
+      padding: 12px 16px; border-radius: 10px; font-size: 0.85rem;
+      margin-bottom: 16px; display: none;
+    }
+    .auth-error.show { display: block; }
+    .auth-loading { display: none; }
+    .auth-loading.show { display: inline-block; }
   </style>
 </head>
 <body>
@@ -29,7 +45,6 @@
             <h2 class="auth-left-title">Welcome back to Finvestmart</h2>
             <p class="auth-left-sub">Sign in to track your applications, claim rewards, and manage your financial products.</p>
           </div>
-
           <div class="auth-benefits">
             <div class="auth-benefit"><i class="fas fa-chart-line"></i> Track all your applications</div>
             <div class="auth-benefit"><i class="fas fa-coins"></i> Claim your pending rewards</div>
@@ -43,44 +58,38 @@
           <h2 class="auth-right-title">Sign In</h2>
           <p class="auth-right-sub">Enter your credentials to access your dashboard</p>
 
+          <!-- Google Sign-In -->
+          <button class="google-btn" id="googleSignInBtn" type="button">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+            Continue with Google
+          </button>
+
+          <div class="form-divider"><span>or sign in with email</span></div>
+
+          <!-- Error box -->
+          <div class="auth-error" id="loginError"></div>
+
           <form id="loginForm" novalidate>
             <div class="form-group">
-              <label class="form-label">Email or Mobile Number *</label>
-              <input type="text" name="email" class="form-input" placeholder="Email or 10-digit mobile" required />
+              <label class="form-label">Email Address *</label>
+              <input type="email" name="email" id="loginEmail" class="form-input" placeholder="you@example.com" required />
             </div>
 
             <div class="form-group">
               <label class="form-label" style="display:flex;justify-content:space-between;">
                 Password *
-                <a href="forgot-password.html" style="font-weight:500;color:var(--accent-color);font-size:0.8rem;">Forgot password?</a>
+                <a href="#" id="forgotPasswordLink" style="font-weight:500;color:var(--accent-color);font-size:0.8rem;">Forgot password?</a>
               </label>
               <div class="password-wrapper">
-                <input type="password" name="password" class="form-input" placeholder="Enter your password" required />
+                <input type="password" name="password" id="loginPassword" class="form-input" placeholder="Enter your password" required />
                 <button type="button" class="password-toggle"><i class="fas fa-eye"></i></button>
               </div>
             </div>
 
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
-              <input type="checkbox" id="rememberMe" name="remember_me" style="accent-color:var(--primary-color);" />
-              <label for="rememberMe" style="font-size:0.825rem;color:var(--secondary-text);cursor:pointer;">Remember me for 30 days</label>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-full">
+            <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
               <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
           </form>
-
-          <div class="form-divider"><span>or</span></div>
-
-          <!-- Quick access for demo -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
-            <button onclick="quickLogin('user')" class="btn btn-outline" style="font-size:0.825rem;padding:12px;">
-              <i class="fas fa-user"></i> Demo User
-            </button>
-            <button onclick="quickLogin('admin')" class="btn btn-outline" style="font-size:0.825rem;padding:12px;">
-              <i class="fas fa-user-shield"></i> Demo Admin
-            </button>
-          </div>
 
           <div class="auth-footer">
             Don't have an account? <a href="register.html">Create Free Account</a>
@@ -91,15 +100,146 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js"></script>
-  <script>
-    function quickLogin(type) {
-      if (type === 'admin') {
-        window.location.href = 'admin/index.php';
-      } else {
-        window.location.href = 'dashboard.html';
+  <!-- Firebase SDK (module type) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signInWithPopup,
+      GoogleAuthProvider,
+      sendPasswordResetEmail,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ── Load config ──
+    const { firebaseConfig } = await import('./assets/js/firebase-config.js').catch(() => {
+      // Inline fallback — replace with your real config
+      return { firebaseConfig: null };
+    });
+
+    // If config not loaded via module, read from window (set in firebase-config.js if needed)
+    let app, auth, db, provider;
+    try {
+      const mod = await import('./assets/js/firebase-config.js');
+      auth     = mod.auth;
+      db       = mod.db;
+      provider = mod.provider;
+    } catch(e) {
+      showError('Firebase not configured yet. Please set up firebase-config.js');
+    }
+
+    // Redirect if already logged in
+    if (auth) {
+      onAuthStateChanged(auth, user => {
+        if (user) window.location.href = 'dashboard.html';
+      });
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('loginError');
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+    function hideError() {
+      document.getElementById('loginError').classList.remove('show');
+    }
+    function setLoading(loading) {
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = loading;
+      btn.innerHTML = loading
+        ? '<span class="loading-spinner"></span> Signing In...'
+        : '<i class="fas fa-sign-in-alt"></i> Sign In';
+    }
+
+    // Ensure user doc exists in Firestore (for Google sign-in users)
+    async function ensureUserDoc(user) {
+      const ref = doc(db, 'users', user.uid);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) {
+        const nameParts = (user.displayName || '').split(' ');
+        await setDoc(ref, {
+          firstName:    nameParts[0] || '',
+          lastName:     nameParts.slice(1).join(' ') || '',
+          email:        user.email,
+          phone:        user.phoneNumber || '',
+          city:         '',
+          pan:          '',
+          photoURL:     user.photoURL || '',
+          totalRewards: 0,
+          pendingRewards: 0,
+          paidOut:      0,
+          createdAt:    serverTimestamp()
+        });
       }
     }
+
+    // ── Email / Password Login ──
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      hideError();
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      if (!email || !password) { showError('Please enter email and password.'); return; }
+      setLoading(true);
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = 'dashboard.html';
+      } catch(err) {
+        setLoading(false);
+        const msgs = {
+          'auth/user-not-found':    'No account found with this email.',
+          'auth/wrong-password':    'Incorrect password. Try again.',
+          'auth/invalid-email':     'Invalid email address.',
+          'auth/too-many-requests': 'Too many attempts. Try again later.',
+          'auth/invalid-credential':'Invalid email or password.'
+        };
+        showError(msgs[err.code] || 'Login failed. Please try again.');
+      }
+    });
+
+    // ── Google Sign-In ──
+    document.getElementById('googleSignInBtn').addEventListener('click', async function() {
+      hideError();
+      this.disabled = true;
+      this.innerHTML = '<span class="loading-spinner"></span> Connecting to Google...';
+      try {
+        const result = await signInWithPopup(auth, provider);
+        await ensureUserDoc(result.user);
+        window.location.href = 'dashboard.html';
+      } catch(err) {
+        this.disabled = false;
+        this.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:20px;height:20px;"/> Continue with Google';
+        if (err.code !== 'auth/popup-closed-by-user') {
+          showError('Google sign-in failed. Try again.');
+        }
+      }
+    });
+
+    // ── Forgot Password ──
+    document.getElementById('forgotPasswordLink').addEventListener('click', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!email) { showError('Enter your email above first, then click Forgot Password.'); return; }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        hideError();
+        alert('Password reset email sent! Check your inbox.');
+      } catch(err) {
+        showError('Could not send reset email. Check the email address.');
+      }
+    });
+
+    // ── Password toggle ──
+    document.querySelectorAll('.password-toggle').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        this.querySelector('i').className = input.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+      });
+    });
   </script>
 </body>
 </html>
