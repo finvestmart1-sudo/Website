@@ -19,7 +19,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebas
 
 // ▼▼▼ PASTE YOUR FIREBASE CONFIG HERE ▼▼▼
 const firebaseConfig = {
-  apiKey:            "AIzaSyAENzxQxUZKyoHon049Swm5Xby3Xn-TUv4",
+  apiKey:            "AIzaSyAENzxQxUZKyoHonO49Swm5Xby3Xn-TUv4",
   authDomain:        "finvestmart-ddb3e.firebaseapp.com",
   projectId:         "finvestmart-ddb3e",
   storageBucket:     "finvestmart-ddb3e.firebasestorage.app",
