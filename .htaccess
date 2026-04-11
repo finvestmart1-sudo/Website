@@ -66,7 +66,7 @@ ErrorDocument 403 /index.html
 # ── PHP Settings ──────────────────────────────────────────
 <IfModule mod_php.c>
     php_value session.cookie_httponly 1
-    php_value session.cookie_secure 1
+    # php_value session.cookie_secure 1   ← uncomment this ONLY after you enable SSL/HTTPS
     php_value session.use_strict_mode 1
     php_flag display_errors Off
     php_flag log_errors On

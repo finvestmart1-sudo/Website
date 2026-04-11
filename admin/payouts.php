@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php
+session_start();
+if (!isset($_SESSION["user_id"]) || empty($_SESSION["is_admin"])) {
+    header("Location: ../login.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +35,7 @@
 
       <div class="admin-nav-section">System</div>
       <a href="settings.php" class="admin-nav-link"><i class="fas fa-cog"></i> Settings</a>
-      <a href="../login.html" class="admin-nav-link" style="color:rgba(255,100,100,0.8);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a href="../api/auth/logout.php" class="admin-nav-link" style="color:rgba(255,100,100,0.8);"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
 

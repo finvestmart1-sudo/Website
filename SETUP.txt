@@ -1,0 +1,149 @@
+============================================================
+  FINVESTMART - SETUP INSTRUCTIONS FOR HOSTINGER
+  Complete in 10 minutes, no coding needed
+============================================================
+
+STEP 1 — Create MySQL Database
+───────────────────────────────
+1. Login to Hostinger hPanel (hpanel.hostinger.com)
+2. Go to: Hosting → Manage → Databases → MySQL Databases
+3. Click "Create database"
+4. Note down:
+   • Database name   (e.g.  u123456789_finvestmart)
+   • Database user   (e.g.  u123456789_finuser)
+   • Password        (the one you set)
+   • Host            (usually: localhost)
+
+
+STEP 2 — Import Database Tables
+─────────────────────────────────
+1. In Hostinger hPanel → Databases → phpMyAdmin
+2. Click "Open phpMyAdmin"
+3. Select your database on the LEFT panel
+4. Click the "Import" tab at the top
+5. Click "Choose File" → select:  database/finvestmart.sql
+6. Scroll down → click "Go"
+7. You should see "Import has been successfully finished"
+
+This creates all tables and adds:
+  • 2 test users   → email: rahul@example.com  / password: Test@1234
+  • 1 admin user   → email: admin@finvestmart.com / password: Admin@123
+
+
+STEP 3 — Update Database Credentials
+──────────────────────────────────────
+Open:  config/database.php
+
+Change ONLY these 4 lines (lines 11-17):
+
+  define('DB_HOST', 'localhost');           ← keep as localhost
+  define('DB_USER', 'u123456789_finuser');  ← your DB username from Step 1
+  define('DB_PASS', 'your_password');       ← your DB password from Step 1
+  define('DB_NAME', 'u123456789_finvestmart'); ← your DB name from Step 1
+  define('SITE_URL', 'https://yoursite.com');  ← your actual domain
+
+
+STEP 4 — Upload Files to Hostinger
+────────────────────────────────────
+1. In Hostinger hPanel → File Manager
+2. Open the "public_html" folder
+3. Delete any existing files (index.html, etc.) if needed
+4. Click "Upload" → select this ZIP file → Extract here
+   OR upload all files/folders individually
+
+Make sure these folders are INSIDE public_html:
+  public_html/
+    ├── index.html
+    ├── login.html
+    ├── register.html
+    ├── dashboard.html
+    ├── .htaccess
+    ├── assets/
+    ├── api/
+    ├── admin/
+    ├── config/
+    ├── database/
+    └── products/
+
+
+STEP 5 — Test Your Website
+────────────────────────────
+1. Go to: yourdomain.com
+   → Homepage should load ✓
+
+2. Go to: yourdomain.com/login.html
+   → Login with: rahul@example.com / Test@1234
+   → Dashboard should open ✓
+
+3. Go to: yourdomain.com/admin/login.php
+   → Login with: admin@finvestmart.com / Admin@123
+   → Admin panel should open ✓
+
+
+STEP 6 — Change Default Passwords (Important!)
+────────────────────────────────────────────────
+⚠ Change these immediately after first login:
+
+Admin password → Go to phpMyAdmin → users table → find admin@finvestmart.com
+  → Edit → change password_hash using:
+  SELECT PASSWORD_HASH('YourNewPassword', 'BCRYPT', 12);
+  (Or use the Profile section in dashboard)
+
+Test users → Delete rahul@example.com and priya@example.com
+  from phpMyAdmin → users table → Delete row
+
+
+OPTIONAL — Enable HTTPS
+─────────────────────────
+1. In Hostinger hPanel → SSL → Install (free Let's Encrypt)
+2. After SSL is active, open .htaccess and:
+   - Uncomment the HTTPS redirect lines (remove the # at start)
+   - Uncomment:  php_value session.cookie_secure 1
+
+
+============================================================
+  PAGES & FEATURES
+============================================================
+
+PUBLIC PAGES:
+  /index.html               — Homepage
+  /login.html               — User login
+  /register.html            — New user registration
+  /products/insurance.html  — Insurance product page
+  /products/personal-loan.html
+  /products/home-loan.html
+  /products/business-loan.html
+  /products/demat.html
+  /products/investments.html
+  /products/credit-card.html
+
+USER PAGES (requires login):
+  /dashboard.html           — User dashboard with rewards & applications
+
+ADMIN PAGES (requires admin login):
+  /admin/login.php          — Admin login
+  /admin/index.php          — Admin dashboard
+  /admin/users.php          — Manage users
+  /admin/applications.php   — Manage applications
+  /admin/rewards.php        — Manage rewards
+  /admin/payouts.php        — Process payouts
+
+API ENDPOINTS (called automatically by pages):
+  /api/auth/login.php       — Login
+  /api/auth/register.php    — Register
+  /api/auth/logout.php      — Logout
+  /api/auth/check-session.php — Check if logged in
+  /api/auth/forgot-password.php — Send password reset
+  /api/applications/submit.php  — Submit product application
+  /api/rewards/claim.php        — Claim a reward
+
+
+============================================================
+  SUPPORT
+============================================================
+If you face any issues, check:
+1. config/database.php — correct credentials?
+2. phpMyAdmin — did finvestmart.sql import without errors?
+3. Hostinger hPanel → Error Logs — any PHP errors shown?
+
+============================================================

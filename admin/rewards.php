@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php
+session_start();
+if (!isset($_SESSION["user_id"]) || empty($_SESSION["is_admin"])) {
+    header("Location: ../login.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +24,7 @@
       <a href="users.php" class="admin-nav-link"><i class="fas fa-users"></i> Users</a>
       <a href="applications.php" class="admin-nav-link"><i class="fas fa-file-alt"></i> Applications</a>
       <a href="rewards.php" class="admin-nav-link active"><i class="fas fa-coins"></i> Rewards</a>
-      <a href="../login.html" class="admin-nav-link" style="color:rgba(255,100,100,0.8);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a href="../api/auth/logout.php" class="admin-nav-link" style="color:rgba(255,100,100,0.8);"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
   <div class="admin-main">
