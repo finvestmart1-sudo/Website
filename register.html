@@ -64,14 +64,6 @@
             <p class="auth-right-sub">Free forever. Start earning rewards in 2 minutes.</p>
           </div>
 
-          <!-- Google Sign-Up -->
-          <button class="google-btn" id="googleRegisterBtn" type="button">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
-            Sign up with Google
-          </button>
-
-          <div class="form-divider"><span>or register with email</span></div>
-
           <!-- Error box -->
           <div class="auth-error" id="registerError"></div>
 
@@ -150,34 +142,12 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithPopup,
-      GoogleAuthProvider,
-      updateProfile,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, serverTimestamp }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    let auth, db, provider;
-    try {
-      const mod = await import('./assets/js/firebase-config.js');
-      auth     = mod.auth;
-      db       = mod.db;
-      provider = mod.provider;
-    } catch(e) {
-      showError('Firebase not configured. Please set up firebase-config.js');
-    }
-
-    if (auth) {
-      onAuthStateChanged(auth, user => {
-        if (user) window.location.href = 'dashboard.html';
-      });
-    }
+  <script>
+    // Redirect if already logged in
+    fetch('api/auth/check-session.php')
+      .then(r => r.json())
+      .then(data => { if (data.loggedIn) window.location.href = 'dashboard.html'; })
+      .catch(() => {});
 
     function showError(msg) {
       const el = document.getElementById('registerError');
@@ -194,20 +164,6 @@
       btn.innerHTML = loading
         ? '<span class="loading-spinner"></span> Creating Account...'
         : '<i class="fas fa-user-plus"></i> Create Free Account';
-    }
-
-    async function saveUserToFirestore(uid, data) {
-      const ref = doc(db, 'users', uid);
-      const snap = await getDoc(ref);
-      if (!snap.exists()) {
-        await setDoc(ref, {
-          ...data,
-          totalRewards:   0,
-          pendingRewards: 0,
-          paidOut:        0,
-          createdAt:      serverTimestamp()
-        });
-      }
     }
 
     // ── Email Registration ──
@@ -242,45 +198,26 @@
 
       setLoading(true);
       try {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(cred.user, { displayName: `${firstName} ${lastName}` });
-        await saveUserToFirestore(cred.user.uid, { firstName, lastName, email, phone, city, photoURL: '' });
-        window.location.href = 'dashboard.html';
+        const formData = new FormData();
+        formData.append('first_name',  firstName);
+        formData.append('last_name',   lastName);
+        formData.append('email',       email);
+        formData.append('phone',       phone);
+        formData.append('city',        city);
+        formData.append('password',    password);
+        formData.append('agree_terms', '1');
+
+        const res  = await fetch('api/auth/register.php', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = 'dashboard.html';
+        } else {
+          setLoading(false);
+          showError(data.message || 'Registration failed. Please try again.');
+        }
       } catch(err) {
         setLoading(false);
-        const msgs = {
-          'auth/email-already-in-use': 'This email is already registered. Please log in.',
-          'auth/invalid-email':        'Invalid email address.',
-          'auth/weak-password':        'Password is too weak. Use at least 8 characters.'
-        };
-        showError(msgs[err.code] || 'Registration failed. Please try again.');
-      }
-    });
-
-    // ── Google Sign-Up ──
-    document.getElementById('googleRegisterBtn').addEventListener('click', async function() {
-      hideError();
-      this.disabled = true;
-      this.innerHTML = '<span class="loading-spinner"></span> Connecting to Google...';
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const nameParts = (user.displayName || '').split(' ');
-        await saveUserToFirestore(user.uid, {
-          firstName: nameParts[0] || '',
-          lastName:  nameParts.slice(1).join(' ') || '',
-          email:     user.email,
-          phone:     user.phoneNumber || '',
-          city:      '',
-          photoURL:  user.photoURL || ''
-        });
-        window.location.href = 'dashboard.html';
-      } catch(err) {
-        this.disabled = false;
-        this.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:20px;height:20px;"/> Sign up with Google';
-        if (err.code !== 'auth/popup-closed-by-user') {
-          showError('Google sign-up failed. Try again.');
-        }
+        showError('Connection error. Please try again.');
       }
     });
 

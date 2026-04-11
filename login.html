@@ -58,14 +58,6 @@
           <h2 class="auth-right-title">Sign In</h2>
           <p class="auth-right-sub">Enter your credentials to access your dashboard</p>
 
-          <!-- Google Sign-In -->
-          <button class="google-btn" id="googleSignInBtn" type="button">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
-            Continue with Google
-          </button>
-
-          <div class="form-divider"><span>or sign in with email</span></div>
-
           <!-- Error box -->
           <div class="auth-error" id="loginError"></div>
 
@@ -110,43 +102,12 @@
     </div>
   </div>
 
-  <!-- Firebase SDK (module type) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      signInWithPopup,
-      GoogleAuthProvider,
-      sendPasswordResetEmail,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    // ── Load config ──
-    const { firebaseConfig } = await import('./assets/js/firebase-config.js').catch(() => {
-      // Inline fallback — replace with your real config
-      return { firebaseConfig: null };
-    });
-
-    // If config not loaded via module, read from window (set in firebase-config.js if needed)
-    let app, auth, db, provider;
-    try {
-      const mod = await import('./assets/js/firebase-config.js');
-      auth     = mod.auth;
-      db       = mod.db;
-      provider = mod.provider;
-    } catch(e) {
-      showError('Firebase not configured yet. Please set up firebase-config.js');
-    }
-
+  <script>
     // Redirect if already logged in
-    if (auth) {
-      onAuthStateChanged(auth, user => {
-        if (user) window.location.href = 'dashboard.html';
-      });
-    }
+    fetch('api/auth/check-session.php')
+      .then(r => r.json())
+      .then(data => { if (data.loggedIn) window.location.href = 'dashboard.html'; })
+      .catch(() => {});
 
     function showError(msg) {
       const el = document.getElementById('loginError');
@@ -164,28 +125,6 @@
         : '<i class="fas fa-sign-in-alt"></i> Sign In';
     }
 
-    // Ensure user doc exists in Firestore (for Google sign-in users)
-    async function ensureUserDoc(user) {
-      const ref = doc(db, 'users', user.uid);
-      const snap = await getDoc(ref);
-      if (!snap.exists()) {
-        const nameParts = (user.displayName || '').split(' ');
-        await setDoc(ref, {
-          firstName:    nameParts[0] || '',
-          lastName:     nameParts.slice(1).join(' ') || '',
-          email:        user.email,
-          phone:        user.phoneNumber || '',
-          city:         '',
-          pan:          '',
-          photoURL:     user.photoURL || '',
-          totalRewards: 0,
-          pendingRewards: 0,
-          paidOut:      0,
-          createdAt:    serverTimestamp()
-        });
-      }
-    }
-
     // ── Email / Password Login ──
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -195,37 +134,20 @@
       if (!email || !password) { showError('Please enter email and password.'); return; }
       setLoading(true);
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = 'dashboard.html';
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+        const res  = await fetch('api/auth/login.php', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = 'dashboard.html';
+        } else {
+          setLoading(false);
+          showError(data.message || 'Login failed. Please try again.');
+        }
       } catch(err) {
         setLoading(false);
-        const msgs = {
-          'auth/user-not-found':       'No account found with this email.',
-          'auth/wrong-password':       'Incorrect password. Try again.',
-          'auth/invalid-email':        'Invalid email address.',
-          'auth/too-many-requests':    'Too many attempts. Try again later.',
-          'auth/invalid-credential':   'Invalid email or password.',
-          'auth/operation-not-allowed':'Email/Password login is not enabled. Please contact support.'
-        };
-        showError(msgs[err.code] || 'Login failed. Please try again.');
-      }
-    });
-
-    // ── Google Sign-In ──
-    document.getElementById('googleSignInBtn').addEventListener('click', async function() {
-      hideError();
-      this.disabled = true;
-      this.innerHTML = '<span class="loading-spinner"></span> Connecting to Google...';
-      try {
-        const result = await signInWithPopup(auth, provider);
-        await ensureUserDoc(result.user);
-        window.location.href = 'dashboard.html';
-      } catch(err) {
-        this.disabled = false;
-        this.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:20px;height:20px;"/> Continue with Google';
-        if (err.code !== 'auth/popup-closed-by-user') {
-          showError('Google sign-in failed. Try again.');
-        }
+        showError('Connection error. Please try again.');
       }
     });
 
@@ -235,11 +157,14 @@
       const email = document.getElementById('loginEmail').value.trim();
       if (!email) { showError('Enter your email above first, then click Forgot Password.'); return; }
       try {
-        await sendPasswordResetEmail(auth, email);
+        const formData = new FormData();
+        formData.append('email', email);
+        const res  = await fetch('api/auth/forgot-password.php', { method: 'POST', body: formData });
+        const data = await res.json();
         hideError();
-        alert('Password reset email sent! Check your inbox.');
+        alert(data.message || 'If this email is registered, a reset link has been sent.');
       } catch(err) {
-        showError('Could not send reset email. Check the email address.');
+        showError('Could not send reset email. Please try again.');
       }
     });
 

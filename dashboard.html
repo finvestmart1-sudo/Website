@@ -441,8 +441,8 @@
 
   <script src="assets/js/main.js"></script>
 
-  <!-- Firebase Auth Guard + Demo Mode + Firestore Data Loading -->
-  <script type="module">
+  <!-- Auth Guard + Demo Mode + PHP Session Data -->
+  <script>
     const demoMode = sessionStorage.getItem('finvestDemoMode');
 
     function getGreeting() {
@@ -470,7 +470,10 @@
       if (vals[2]) { vals[2].dataset.target = pending; vals[2].textContent = '₹' + fmt(pending); }
       if (vals[3]) { vals[3].dataset.target = paid;    vals[3].textContent = '₹' + fmt(paid); }
       if (!total && !apps && !pending && !paid) {
-        document.querySelectorAll('.stat-card-change').forEach(el => { el.className = 'stat-card-change'; el.innerHTML = '<i class="fas fa-info-circle"></i> No activity yet'; });
+        document.querySelectorAll('.stat-card-change').forEach(el => {
+          el.className = 'stat-card-change';
+          el.innerHTML = '<i class="fas fa-info-circle"></i> No activity yet';
+        });
       }
     }
 
@@ -490,74 +493,48 @@
       if (badge) badge.textContent = '0';
     }
 
-    function wireLogout(auth, signOutFn) {
+    // For demo mode, intercept logout link so it clears sessionStorage
+    if (demoMode) {
       document.querySelectorAll('a[href="api/auth/logout.php"]').forEach(link => {
-        link.setAttribute('href', '#');
-        link.addEventListener('click', async e => {
+        link.addEventListener('click', function(e) {
           e.preventDefault();
           sessionStorage.removeItem('finvestDemoMode');
-          if (auth && signOutFn) await signOutFn(auth).catch(() => {});
           window.location.href = 'login.html';
         });
       });
     }
 
-    // ── Demo User: show empty/new-user dashboard ──
+    // ── Demo User: empty/new-user dashboard ──
     if (demoMode === 'user') {
       document.body.style.visibility = 'visible';
       applyUserInfo('Demo User', 'demo@finvestmart.com');
       applyStats(0, 0, 0, 0);
       showNoData();
-      wireLogout(null, null);
 
-    // ── Demo Admin: show dashboard with sample data ──
+    // ── Demo Admin: sample data dashboard ──
     } else if (demoMode === 'admin') {
       document.body.style.visibility = 'visible';
       applyUserInfo('Demo Admin', 'admin@finvestmart.com');
-      wireLogout(null, null);
 
-    // ── Real Firebase user ──
+    // ── Real user: check PHP session ──
     } else {
-      const authTimeout = setTimeout(() => { window.location.href = 'login.html'; }, 8000);
-      try {
-        const { auth, db } = await import('./assets/js/firebase-config.js');
-        const { onAuthStateChanged, signOut } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js');
-        const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
-
-        onAuthStateChanged(auth, async user => {
-          clearTimeout(authTimeout);
-          if (!user) { window.location.href = 'login.html'; return; }
-
+      fetch('api/auth/check-session.php')
+        .then(r => r.json())
+        .then(data => {
+          if (!data.loggedIn) { window.location.href = 'login.html'; return; }
           document.body.style.visibility = 'visible';
-          const displayName = user.displayName || user.email.split('@')[0];
-          applyUserInfo(displayName, user.email);
-          wireLogout(auth, signOut);
-
-          // Load Firestore user data
-          try {
-            const snap = await getDoc(doc(db, 'users', user.uid));
-            if (snap.exists()) {
-              const d = snap.data();
-              const fullName = ((d.firstName || '') + ' ' + (d.lastName || '')).trim() || displayName;
-              applyUserInfo(fullName, user.email);
-              const total   = d.totalRewards   || 0;
-              const apps    = d.applications   || 0;
-              const pending = d.pendingRewards  || 0;
-              const paid    = d.paidOut         || 0;
-              applyStats(total, apps, pending, paid);
-              if (!total && !apps && !pending && !paid) showNoData();
-            } else {
-              applyStats(0, 0, 0, 0);
-              showNoData();
-            }
-          } catch (_) {
-            applyStats(0, 0, 0, 0);
+          applyUserInfo(data.name, data.email);
+          applyStats(
+            data.totalRewards   || 0,
+            data.applications   || 0,
+            data.pendingRewards || 0,
+            data.paidOut        || 0
+          );
+          if (!data.totalRewards && !data.applications && !data.pendingRewards && !data.paidOut) {
+            showNoData();
           }
-        });
-      } catch (e) {
-        clearTimeout(authTimeout);
-        window.location.href = 'login.html';
-      }
+        })
+        .catch(() => { window.location.href = 'login.html'; });
     }
   </script>
 
