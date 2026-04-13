@@ -441,10 +441,8 @@
 
   <script src="assets/js/main.js"></script>
 
-  <!-- Auth Guard + Demo Mode + PHP Session Data -->
+  <!-- Auth Guard + PHP Session Data -->
   <script>
-    const demoMode = sessionStorage.getItem('finvestDemoMode');
-
     function getGreeting() {
       const h = new Date().getHours();
       return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
@@ -465,16 +463,14 @@
     function applyStats(total, apps, pending, paid) {
       const vals = document.querySelectorAll('.stat-card-value');
       const fmt = n => Number(n).toLocaleString('en-IN');
-      if (vals[0]) { vals[0].dataset.target = total;   vals[0].textContent = '₹' + fmt(total); }
-      if (vals[1]) { vals[1].dataset.target = apps;    vals[1].textContent = apps; }
-      if (vals[2]) { vals[2].dataset.target = pending; vals[2].textContent = '₹' + fmt(pending); }
-      if (vals[3]) { vals[3].dataset.target = paid;    vals[3].textContent = '₹' + fmt(paid); }
-      if (!total && !apps && !pending && !paid) {
-        document.querySelectorAll('.stat-card-change').forEach(el => {
-          el.className = 'stat-card-change';
-          el.innerHTML = '<i class="fas fa-info-circle"></i> No activity yet';
-        });
-      }
+      if (vals[0]) { vals[0].dataset.target = total;   vals[0].textContent = total > 0 ? '₹' + fmt(total) : '₹0'; }
+      if (vals[1]) { vals[1].dataset.target = apps;    vals[1].textContent = apps || '0'; }
+      if (vals[2]) { vals[2].dataset.target = pending; vals[2].textContent = pending > 0 ? '₹' + fmt(pending) : '₹0'; }
+      if (vals[3]) { vals[3].dataset.target = paid;    vals[3].textContent = paid > 0 ? '₹' + fmt(paid) : '₹0'; }
+      document.querySelectorAll('.stat-card-change').forEach(el => {
+        el.className = 'stat-card-change';
+        el.innerHTML = '<i class="fas fa-info-circle"></i> No activity yet';
+      });
     }
 
     function showNoData() {
@@ -493,49 +489,24 @@
       if (badge) badge.textContent = '0';
     }
 
-    // For demo mode, intercept logout link so it clears sessionStorage
-    if (demoMode) {
-      document.querySelectorAll('a[href="api/auth/logout.php"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          sessionStorage.removeItem('finvestDemoMode');
-          window.location.href = 'login.html';
-        });
-      });
-    }
-
-    // ── Demo User: empty/new-user dashboard ──
-    if (demoMode === 'user') {
-      document.body.style.visibility = 'visible';
-      applyUserInfo('Demo User', 'demo@finvestmart.com');
-      applyStats(0, 0, 0, 0);
-      showNoData();
-
-    // ── Demo Admin: sample data dashboard ──
-    } else if (demoMode === 'admin') {
-      document.body.style.visibility = 'visible';
-      applyUserInfo('Demo Admin', 'admin@finvestmart.com');
-
-    // ── Real user: check PHP session ──
-    } else {
-      fetch('api/auth/check-session.php')
-        .then(r => r.json())
-        .then(data => {
-          if (!data.loggedIn) { window.location.href = 'login.html'; return; }
-          document.body.style.visibility = 'visible';
-          applyUserInfo(data.name, data.email);
-          applyStats(
-            data.totalRewards   || 0,
-            data.applications   || 0,
-            data.pendingRewards || 0,
-            data.paidOut        || 0
-          );
-          if (!data.totalRewards && !data.applications && !data.pendingRewards && !data.paidOut) {
-            showNoData();
-          }
-        })
-        .catch(() => { window.location.href = 'login.html'; });
-    }
+    // Always check real PHP session first
+    sessionStorage.removeItem('finvestDemoMode');
+    fetch('api/auth/check-session.php')
+      .then(r => r.json())
+      .then(data => {
+        if (!data.loggedIn) { window.location.href = 'login.html'; return; }
+        document.body.style.visibility = 'visible';
+        applyUserInfo(data.name, data.email);
+        applyStats(
+          data.totalRewards   || 0,
+          data.applications   || 0,
+          data.pendingRewards || 0,
+          data.paidOut        || 0
+        );
+        // Always clear dummy hardcoded content — show real data only
+        showNoData();
+      })
+      .catch(() => { window.location.href = 'login.html'; });
   </script>
 
   <script>
