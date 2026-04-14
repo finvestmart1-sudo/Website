@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Finvestmart – Website Flow</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  @page { size: A4 landscape; margin: 18mm 18mm; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #F0F4F8;
+    color: #1a2640;
+    padding: 24px;
+    width: 100%;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, #0A2540 0%, #1a3a5c 55%, #00C896 100%);
+    border-radius: 16px;
+    padding: 40px 44px;
+    color: #fff;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .logo-icon {
+    width: 56px; height: 56px;
+    background: #00C896;
+    border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; font-weight: 900; color: #fff;
+    margin-right: 14px;
+    vertical-align: middle;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .cover h1 { font-size: 2rem; font-weight: 900; line-height: 1.15; display:inline; vertical-align:middle; }
+  .cover p  { font-size: 0.9rem; opacity: 0.75; margin-top: 10px; max-width: 420px; }
+  .cover-meta { text-align: right; opacity: 0.75; font-size: 0.82rem; line-height: 2; }
+  .cover-badge { font-size: 2rem; font-weight: 900; color: #00C896; }
+
+  /* ── SECTION ── */
+  .section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .section-title {
+    font-size: 1.05rem; font-weight: 800;
+    color: #0A2540;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .s-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: #fff; flex-shrink:0;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ── STEPS (horizontal, wrapping) ── */
+  .steps {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .step-num {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.85rem; color: #fff;
+    margin-bottom: 8px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .step-box {
+    border-radius: 11px;
+    padding: 10px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.4;
+    width: 100%;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .step-box .ico { font-size: 1rem; margin-bottom: 4px; display:block; }
+  .step-box .t   { font-weight: 800; font-size: 0.78rem; display:block; }
+  .step-box .s   { font-size: 0.66rem; margin-top: 3px; display:block; opacity:0.82; }
+
+  .arrow {
+    display: flex; align-items: center;
+    padding-top: 22px; flex-shrink: 0;
+  }
+  .arrow-line { height: 2px; width: 16px; }
+  .arrow-head { font-size: 0.9rem; margin-left: -3px; }
+
+  /* Box colors */
+  .c-navy   { background:#0A2540; color:#fff; }
+  .c-green  { background:#00C896; color:#fff; }
+  .c-blue   { background:#3B82F6; color:#fff; }
+  .c-amber  { background:#F59E0B; color:#fff; }
+  .c-red    { background:#EF4444; color:#fff; }
+  .c-purple { background:#6366F1; color:#fff; }
+  .c-teal   { background:#14B8A6; color:#fff; }
+  .c-pink   { background:#EC4899; color:#fff; }
+  .c-lnavy  { background:#EFF6FF; color:#1e3a5f; border:2px solid #BFDBFE; }
+  .c-lgreen { background:#ECFDF5; color:#064E3B; border:2px solid #A7F3D0; }
+  .c-lamber { background:#FFFBEB; color:#78350F; border:2px solid #FDE68A; }
+  .c-lred   { background:#FEF2F2; color:#7F1D1D; border:2px solid #FECACA; }
+  .c-lpurp  { background:#EEF2FF; color:#3730A3; border:2px solid #C7D2FE; }
+  .c-lpink  { background:#FDF2F8; color:#831843; border:2px solid #FBCFE8; }
+  .c-lteal  { background:#F0FDFA; color:#134E4A; border:2px solid #99F6E4; }
+
+  /* ── EMAIL TABLE ── */
+  .etable { width:100%; border-collapse:collapse; margin-top:6px; }
+  .etable th { background:#0A2540; color:#fff; padding:10px 14px; text-align:left; font-size:0.78rem; font-weight:700; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .etable th:first-child { border-radius:8px 0 0 0; }
+  .etable th:last-child  { border-radius:0 8px 0 0; }
+  .etable td { padding:10px 14px; font-size:0.78rem; border-bottom:1px solid #F1F5F9; }
+  .etable tr:last-child td { border-bottom:none; }
+  .etable tr:nth-child(even) td { background:#F8FAFC; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .badge { display:inline-block; padding:2px 9px; border-radius:20px; font-size:0.7rem; font-weight:700; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  /* ── DB GRID ── */
+  .db-grid { display:flex; gap:14px; flex-wrap:wrap; }
+  .db-card { flex:1; min-width:150px; border-radius:12px; overflow:hidden; border:2px solid #E2E8F0; }
+  .db-head { padding:9px 14px; font-weight:800; font-size:0.82rem; color:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .db-body { padding:8px 14px; }
+  .db-row  { padding:4px 0; font-size:0.72rem; color:#475569; border-bottom:1px dashed #E2E8F0; }
+  .db-row:last-child { border-bottom:none; }
+  .pk { color:#F59E0B; font-size:0.62rem; font-weight:700; }
+  .fk { color:#6366F1; font-size:0.62rem; font-weight:700; }
+
+  /* ── URL REF ── */
+  .url-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .url-group-title { font-weight:800; font-size:0.75rem; color:#0A2540; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.05em; }
+  .url-item { padding:8px 12px; background:#F8FAFC; border-radius:8px; font-size:0.75rem; margin-bottom:7px; }
+  .url-item strong { display:block; font-weight:700; }
+  .url-item code { font-size:0.67rem; color:#6366F1; }
+
+  /* ── RELATIONS ── */
+  .rels { margin-top:16px; padding:12px 16px; background:#F8FAFC; border-radius:10px; border:1px dashed #CBD5E1; }
+  .rels-title { font-weight:800; font-size:0.78rem; color:#0A2540; margin-bottom:8px; }
+  .rels-wrap { display:flex; flex-wrap:wrap; gap:8px; }
+  .rel-chip { font-size:0.72rem; padding:5px 11px; border-radius:7px; font-weight:600; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  .footer { text-align:center; color:#94A3B8; font-size:0.72rem; margin-top:20px; padding:12px; }
+
+  @media print {
+    body { padding:0; background:#fff; }
+    .section { box-shadow:none; border:1px solid #E2E8F0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div>
+    <div><span class="logo-icon">F</span><h1>Finvestmart – Website Flow Diagram</h1></div>
+    <p style="margin-top:12px;">Complete working flow of the B2B referral &amp; financial products platform — from user registration to admin approval and reward payout.</p>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-badge">5 Flows</div>
+    <div>User · Admin · Referral</div>
+    <div>Emails · Database</div>
+    <div style="margin-top:10px;">Date: April 2026</div>
+    <div>Confidential</div>
+  </div>
+</div>
+
+<!-- FLOW 1: USER JOURNEY -->
+<div class="section">
+  <div class="section-title">
+    <div class="s-icon" style="background:#3B82F6;">👤</div>
+    Flow 1 — User Journey &nbsp;(Register → Apply → Get Reward)
+  </div>
+  <div class="steps">
+
+    <div class="step"><div class="step-num" style="background:#3B82F6;">1</div>
+      <div class="step-box c-lnavy"><span class="ico">🌐</span><span class="t">Homepage</span><span class="s">index.html<br/>Visits website</span></div></div>
+    <div class="arrow"><div class="arrow-line" style="background:#3B82F6;"></div><div class="arrow-head" style="color:#3B82F6;">▶</div></div>
+
+    <div class="step"><div class="step-num" style="background:#6366F1;">2</div>
+      <div class="step-box c-lpurp"><span class="ico">📝</span><span class="t">Register</span><span class="s">register.html<br/>Name, email,<br/>phone, password</span></div></div>
+    <div class="arrow"><div class="arrow-line" style="background:#6366F1;"></div><div class="arrow-head" style="color:#6366F1;">▶</div></div>
+
+    <div class="step"><div class="step-num" style="background:#0A2540;">3</div>
+      <div class="step-box c-navy"><span class="ico">⚙️</span><span class="t">Server saves</span><span class="s">register.php<br/>Saves to DB<br/>Sets session</span></div></div>
+    <div class="arrow"><div class="arrow-line" style="background:#0A2540;"></div><div class="arrow-head" style="color:#0A2540;">▶</div></div>
+
+    <div class="step"><div class="step-num" style="background:#00C896;">4</div>
+      <div class="step-box c-lgreen"><span class="ico">📊</span><span class="t">Dashboard</span><span class="s">dashboard.html<br/>Stats &amp; apps</span></div></div>
+    <div class="arrow"><div class="arrow-line" style="background:#00C896;"></div><div class="arrow-head" style="color:#00C896;">▶</div></div>
+
+    <div class="step"><div class="step-num" style="background:#F59E0B;">5</div>
+      <div class="step-box c-lamber"><span class="ico">💼</span><span class="t">Apply Product</span><span class="s">products/ page<br/>Loan, Insurance<br/>Demat, Card</span></div></div>
+    <div class="arrow"><div class="arrow-line" style="background:#F59E0B;"></div><div class="arrow-head" style="color:#F59E0B;">▶</div></div>
+
+    <div class="step"><div class="step-num" style="background:#EF4444;">6</div>
+      <div class="step-box c-lred"><span class="ico">⏳</span><span class="t">Pending Review</span><span class="s">Shows in dashboard<br/>Waiting for<br/>admin</span></div></div>
+    <div class="arrow"><div class="arrow-line" style="background:#EF4444;"></div><div class="arrow-head" style="color:#EF4444;">▶</div></div>
+
+    <div class="step"><div class="step-num" style="background:#00C896;">7</div>
+      <div class="step-box c-green"><span class="ico">🎉</span><span class="t">Reward Earned</span><span class="s">After approval<br/>Reward shows<br/>in dashboard</span></div></div>
+
+  </div>
+</div>
+
+<!-- FLOW 2 + FLOW 3 side by side -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+
+  <!-- FLOW 2: ADMIN -->
+  <div class="section" style="margin-bottom:0;">
+    <div class="section-title">
+      <div class="s-icon" style="background:#0A2540;">🛡️</div>
+      Flow 2 — Admin Flow
+    </div>
+    <div class="steps" style="flex-wrap:wrap;">
+
+      <div class="step"><div class="step-num" style="background:#0A2540;">1</div>
+        <div class="step-box c-navy"><span class="ico">🔐</span><span class="t">Admin Login</span><span class="s">admin/login.php<br/>Email + Password</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#0A2540;"></div><div class="arrow-head" style="color:#0A2540;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#6366F1;">2</div>
+        <div class="step-box c-lpurp"><span class="ico">📊</span><span class="t">Admin Panel</span><span class="s">admin/index.php<br/>Real stats</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#6366F1;"></div><div class="arrow-head" style="color:#6366F1;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#F59E0B;">3</div>
+        <div class="step-box c-lamber"><span class="ico">📋</span><span class="t">See Applications</span><span class="s">All pending apps<br/>Name, product</span></div></div>
+
+      <div style="width:100%;display:flex;gap:10px;margin-top:12px;padding-left:18px;">
+        <div style="flex:1;">
+          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:#888;margin-bottom:6px;">Click Approve ▼</div>
+          <div class="step-box c-green" style="font-size:0.72rem;text-align:center;">
+            <span class="ico">✅</span>
+            <span class="t">Approved</span>
+            <span class="s">Status updated<br/>Reward unlocked<br/>Email → User</span>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:#888;margin-bottom:6px;">Click Reject ▼</div>
+          <div class="step-box c-lred" style="font-size:0.72rem;text-align:center;">
+            <span class="ico">❌</span>
+            <span class="t">Rejected</span>
+            <span class="s">Status updated<br/>Rejection email<br/>→ User</span>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:#888;margin-bottom:6px;">After Approve ▼</div>
+          <div class="step-box c-teal" style="font-size:0.72rem;text-align:center;">
+            <span class="ico">💸</span>
+            <span class="t">Pay Reward</span>
+            <span class="s">admin/rewards.php<br/>Mark as Paid</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOW 3: REFERRAL -->
+  <div class="section" style="margin-bottom:0;">
+    <div class="section-title">
+      <div class="s-icon" style="background:#EC4899;">🔗</div>
+      Flow 3 — Referral &amp; Reward (B2B)
+    </div>
+    <div class="steps">
+
+      <div class="step"><div class="step-num" style="background:#0A2540;">1</div>
+        <div class="step-box c-navy"><span class="ico">👤</span><span class="t">Existing User</span><span class="s">Has referral code<br/>e.g. VIS1234</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#EC4899;"></div><div class="arrow-head" style="color:#EC4899;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#EC4899;">2</div>
+        <div class="step-box c-lpink"><span class="ico">📤</span><span class="t">Share Link</span><span class="s">Dashboard<br/>Refer &amp; Earn<br/>WhatsApp/Copy</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#EC4899;"></div><div class="arrow-head" style="color:#EC4899;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#6366F1;">3</div>
+        <div class="step-box c-lpurp"><span class="ico">👥</span><span class="t">Friend Registers</span><span class="s">Clicks link<br/>?ref=VIS1234<br/>Signs up</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#F59E0B;"></div><div class="arrow-head" style="color:#F59E0B;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#F59E0B;">4</div>
+        <div class="step-box c-lamber"><span class="ico">🏆</span><span class="t">+100 Points</span><span class="s">Auto awarded<br/>to referrer<br/>on signup</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#00C896;"></div><div class="arrow-head" style="color:#00C896;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#00C896;">5</div>
+        <div class="step-box c-lgreen"><span class="ico">💼</span><span class="t">Friend Applies</span><span class="s">Any product<br/>form submitted</span></div></div>
+      <div class="arrow"><div class="arrow-line" style="background:#00C896;"></div><div class="arrow-head" style="color:#00C896;">▶</div></div>
+
+      <div class="step"><div class="step-num" style="background:#00C896;">6</div>
+        <div class="step-box c-green"><span class="ico">🎯</span><span class="t">+200 Points</span><span class="s">Bonus to referrer<br/>Total = 300 pts</span></div></div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FLOW 4: EMAIL -->
+<div class="section">
+  <div class="section-title">
+    <div class="s-icon" style="background:#F59E0B;">✉️</div>
+    Flow 4 — Automatic Email Notifications
+  </div>
+  <table class="etable">
+    <thead>
+      <tr><th>Event / Trigger</th><th>Who Gets Email</th><th>Email Subject</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>🙋 User submits application form</td>
+        <td><strong>User</strong> (applicant)</td>
+        <td>Your application has been received!</td>
+        <td><span class="badge" style="background:#DCFCE7;color:#166534;">✅ Auto</span></td>
+      </tr>
+      <tr>
+        <td>🙋 User submits application form</td>
+        <td><strong>Admin</strong> (you)</td>
+        <td>New application received – action needed</td>
+        <td><span class="badge" style="background:#DCFCE7;color:#166534;">✅ Auto</span></td>
+      </tr>
+      <tr>
+        <td>✅ Admin clicks Approve</td>
+        <td><strong>User</strong> (applicant)</td>
+        <td>Congratulations! Your application is Approved</td>
+        <td><span class="badge" style="background:#DCFCE7;color:#166534;">✅ Auto</span></td>
+      </tr>
+      <tr>
+        <td>❌ Admin clicks Reject</td>
+        <td><strong>User</strong> (applicant)</td>
+        <td>Update on your application</td>
+        <td><span class="badge" style="background:#DCFCE7;color:#166534;">✅ Auto</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FLOW 5: DATABASE + URL REF -->
+<div style="display:grid;grid-template-columns:3fr 2fr;gap:20px;">
+
+  <div class="section" style="margin-bottom:0;">
+    <div class="section-title">
+      <div class="s-icon" style="background:#14B8A6;">🗄️</div>
+      Flow 5 — Database Structure
+    </div>
+    <div class="db-grid">
+      <div class="db-card">
+        <div class="db-head" style="background:#0A2540;">👤 users</div>
+        <div class="db-body">
+          <div class="db-row"><span class="pk">PK</span> id</div>
+          <div class="db-row">first_name, last_name</div>
+          <div class="db-row">email, phone, city</div>
+          <div class="db-row">password_hash</div>
+          <div class="db-row">referral_code</div>
+          <div class="db-row"><span class="fk">FK</span> referred_by</div>
+          <div class="db-row">referral_points</div>
+          <div class="db-row">is_admin (0/1)</div>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-head" style="background:#F59E0B;">📋 applications</div>
+        <div class="db-body">
+          <div class="db-row"><span class="pk">PK</span> id</div>
+          <div class="db-row"><span class="fk">FK</span> user_id</div>
+          <div class="db-row">product_type</div>
+          <div class="db-row">applicant_name</div>
+          <div class="db-row">status</div>
+          <div class="db-row">(pending / approved</div>
+          <div class="db-row">/ rejected)</div>
+          <div class="db-row">reward_amount</div>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-head" style="background:#00C896;">🏆 rewards</div>
+        <div class="db-body">
+          <div class="db-row"><span class="pk">PK</span> id</div>
+          <div class="db-row"><span class="fk">FK</span> user_id</div>
+          <div class="db-row"><span class="fk">FK</span> application_id</div>
+          <div class="db-row">amount</div>
+          <div class="db-row">status</div>
+          <div class="db-row">(eligible / claimed</div>
+          <div class="db-row">/ paid)</div>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-head" style="background:#EC4899;">🔗 referral_rewards</div>
+        <div class="db-body">
+          <div class="db-row"><span class="pk">PK</span> id</div>
+          <div class="db-row"><span class="fk">FK</span> referrer_id</div>
+          <div class="db-row"><span class="fk">FK</span> referred_id</div>
+          <div class="db-row">points_awarded</div>
+          <div class="db-row">reason</div>
+          <div class="db-row">(signup / application)</div>
+        </div>
+      </div>
+    </div>
+    <div class="rels">
+      <div class="rels-title">🔗 Table Relationships</div>
+      <div class="rels-wrap">
+        <span class="rel-chip" style="background:#EEF2FF;color:#3730A3;">users.id → applications.user_id</span>
+        <span class="rel-chip" style="background:#ECFDF5;color:#064E3B;">applications.id → rewards.application_id</span>
+        <span class="rel-chip" style="background:#FDF2F8;color:#831843;">users.id → referral_rewards.referrer_id</span>
+        <span class="rel-chip" style="background:#FFFBEB;color:#78350F;">users.id → users.referred_by</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0;">
+    <div class="section-title">
+      <div class="s-icon" style="background:#6366F1;">🌐</div>
+      All Website Pages
+    </div>
+    <div class="url-group-title" style="color:#3B82F6;">👤 User Pages</div>
+    <div class="url-item" style="border-left:4px solid #3B82F6;"><strong>Homepage</strong><code>/index.html</code></div>
+    <div class="url-item" style="border-left:4px solid #6366F1;"><strong>Login</strong><code>/login.html</code></div>
+    <div class="url-item" style="border-left:4px solid #6366F1;"><strong>Register</strong><code>/register.html</code></div>
+    <div class="url-item" style="border-left:4px solid #00C896;"><strong>Dashboard</strong><code>/dashboard.html</code></div>
+    <div class="url-item" style="border-left:4px solid #F59E0B;"><strong>Products</strong><code>/products/*.html</code></div>
+
+    <div class="url-group-title" style="margin-top:16px;color:#0A2540;">🛡️ Admin Pages</div>
+    <div class="url-item" style="border-left:4px solid #0A2540;"><strong>Admin Login</strong><code>/admin/login.php</code></div>
+    <div class="url-item" style="border-left:4px solid #0A2540;"><strong>Dashboard</strong><code>/admin/index.php</code></div>
+    <div class="url-item" style="border-left:4px solid #0A2540;"><strong>Applications</strong><code>/admin/applications.php</code></div>
+    <div class="url-item" style="border-left:4px solid #0A2540;"><strong>Users</strong><code>/admin/users.php</code></div>
+    <div class="url-item" style="border-left:4px solid #0A2540;"><strong>Rewards</strong><code>/admin/rewards.php</code></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong style="color:#0A2540;">Finvestmart</strong> — B2B Financial Products &amp; Referral Platform &nbsp;|&nbsp; Confidential &nbsp;|&nbsp; April 2026
+</div>
+
+</body>
+</html>
